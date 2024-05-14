@@ -1,0 +1,110 @@
+.iconLeft {
+    margin-right: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.iconRight {
+    margin-left: 1rem;
+    display: flex;
+    align-items: flex-end;
+}
+
+
+.about {
+    width: 70%;
+    margin: 2rem auto 0 auto;
+    height: fit-content;
+    font-family: "Reddit Mono", monospace;
+}
+
+.about__intro {
+    display: flex;
+}
+
+.about__introGreet {
+    color: rgb(14, 107, 51);
+    margin-top: 1rem;
+}
+
+.about__introName {
+    color: rgb(14, 107, 51);
+    font-size: 2rem;
+}
+
+.about__descriptionGreet {
+    margin-top: 2rem;
+    color: inherit;
+    color: black;
+    font-size: 1.3rem;
+}
+
+.about__hobbies {
+    margin-top: 2rem;
+}
+
+.about__hobbiesTitle {
+    margin-top: 3rem;
+    color: rgb(14, 107, 51);
+}
+
+.about__hobbiesList {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.about__hobbiesItem {
+    padding-top: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+
+.about__resume {
+    position: relative;
+    cursor: pointer;
+    width: 10rem;
+    height: 2rem;
+    border: 0.1rem solid rgb(14, 107, 51);
+    outline: none;
+    color: rgb(14, 107, 51);
+    margin-top: 1.2rem;
+}
+
+.about__resume.about__resumeSlide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    border: 1px solid rgb(14, 107, 51);
+    background-color: rgb(14, 107, 51);
+    transition: transform 300ms ease-in-out;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.about__resume.about__resumeSlide:hover::before,
+.about__resume.about__resumeSlide:focus::before {
+    transform: scaleX(1);
+}
+
+.about__resume.about__resumeSlide {
+    z-index: 1;
+}
+
+.about__resume.about__resumeSlide:hover,
+.about__resume.about__resumeSlide:focus {
+    color: rgb(255, 255, 255);
+}
+
+@media screen and (max-width: 768px) {
+    .about__hobbiesItem {
+        width: min-content;
+    }
+}
