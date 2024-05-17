@@ -70,12 +70,12 @@
     height: 2rem;
     border: 0.1rem solid rgb(14, 107, 51);
     outline: none;
-    color: rgb(14, 107, 51);
-    margin-top: 1.2rem;
+    margin-top: 1.3rem;
 }
 
 .about__resume.about__resumeSlide::before {
     content: '';
+    color: rgb(14, 107, 51);
     position: absolute;
     top: 0;
     left: 0;

@@ -11,8 +11,9 @@
   outline: none;
   box-sizing: border-box;
   font-family: "Reddit Mono", monospace;
+}
+.sticky {
   position: sticky;
-  z-index: 30;
   top: 0;
 }
 .nav {
@@ -21,6 +22,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: rgb(223, 222, 222);
+  box-shadow: 5px 0px 10px 2px #888888;
 }
 .nav__menubar {
   display: flex;

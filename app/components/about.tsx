@@ -1,27 +1,26 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./about.module.css";
 import Hobby from "./hobby";
+import { fetchHobbies, fetchPersonalDetails } from "../db/data";
 
-const HOBBY_LIST = [
-  { alt: "Gaming hobby", src: "video-games.svg", text: "Gaming" },
-  {
-    alt: "Video editing hobby",
-    src: "video-editing.svg",
-    text: "Editing videos",
-  },
-  {
-    alt: "E-sports hobby",
-    src: "e-sports.svg",
-    text: "Watching E-Sports events",
-  },
-  {
-    alt: "Binge watch hobby",
-    src: "tv-screen.svg",
-    text: "Watching Podcasts/Netflix shows",
-  },
-];
+export default async function About() {
+  const [personalDetails, hobbies] = await Promise.all([
+    fetchPersonalDetails(),
+    fetchHobbies(),
+  ]);
 
-export default function About() {
+  const getHobbyItems = () => {
+    return hobbies.map((hobby) => (
+      <Hobby
+        key={hobby.id}
+        alt={hobby.name}
+        src={hobby.icon_url}
+        text={hobby.name}
+      />
+    ));
+  };
+
   return (
     <section id="about" className={styles.about}>
       <div className={styles.about__intro}>
@@ -34,22 +33,24 @@ export default function About() {
           />
         </div>
         <div>
-          <div className={styles.about__introGreet}>
-            Hi! I am
-          </div>
-          <p className={styles.about__introName}>Anuj Upadhyaya</p>
+          <div className={styles.about__introGreet}>Hi! I am</div>
+          <p className={styles.about__introName}>{personalDetails?.name}</p>
           <div className={styles.about__descriptionGreet}>
-            I am a Senior Software Engineer based in Hyderabad, TS, India, with
-            a focus on both front-end and back-end development. My expertise
-            lies in creating efficient and user-friendly web applications using
-            ReactJS, Next.js, and .NET technologies.
+            {personalDetails?.summary}
           </div>
           <button
             className={`${styles.about__resume} ${styles.about__resumeSlide}`}
             type="button"
             title="Download Resume"
           >
-            Check out my resume!
+            <Link
+              href={{
+                pathname: "/resume",
+                query: { doc: personalDetails.resume_url },
+              }}
+            >
+              Check out my resume!
+            </Link>
           </button>
         </div>
         <div className={styles.iconRight}>
@@ -65,11 +66,7 @@ export default function About() {
         <p className={styles.about__hobbiesTitle}>
           Few things that I like to do when I am bored:
         </p>
-        <div className={styles.about__hobbiesList}>
-          {HOBBY_LIST.map((hobby) => (
-            <Hobby key={hobby.text} {...hobby} />
-          ))}
-        </div>
+        <div className={styles.about__hobbiesList}>{getHobbyItems()}</div>
       </div>
     </section>
   );

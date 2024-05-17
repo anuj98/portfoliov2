@@ -1,23 +1,27 @@
 "use client";
 
 import Link from "next/link";
-// import Image from "next/image";
-import React, { useState } from "react";
-// import Logo from "./Logo";
+import React, { useEffect, useState } from "react";
 import styles from "./navBar.module.css";
 
 const MENU_LIST = [
   { text: "About", href: "/#about" },
   { text: "Experience", href: "/#experience" },
-  { text: "Projects", href: "/#projects" }
+  { text: "Projects", href: "/#projects" },
 ];
 
 export default function Navbar() {
   const [navActive, setNavActive] = useState<boolean | null>(null);
   const [activeIdx, setActiveIdx] = useState(-1);
+  const [isSticky, setIsSticky] = useState(false);
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setIsSticky(window.scrollY >= 40);
+    });
+  });
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isSticky ? styles.sticky : ""}`}>
       <nav className={styles.nav}>
         <Link href="/">
           <h1 className={styles.logo}>AU</h1>
@@ -44,7 +48,9 @@ export default function Navbar() {
               key={menu.text}
             >
               <Link
-                className={`nav__item ${activeIdx === idx ? styles.active : ""}`}
+                className={`nav__item ${
+                  activeIdx === idx ? styles.active : ""
+                }`}
                 href={menu.href}
               >
                 {menu.text}
