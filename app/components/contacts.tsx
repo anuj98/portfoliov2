@@ -17,27 +17,27 @@ export default function Contacts({
         <Image
           alt="linkedin"
           className={styles.icon}
-          src="linkedin.svg"
-          width={30}
-          height={30}
+          src="https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/linkedin.svg"
+          width={40}
+          height={40}
         />
       </Link>
       <Link href={`mailto:${email}`} target="_blank" >
         <Image
           alt="email"
           className={styles.icon}
-          src="email.svg"
-          width={30}
-          height={30}
+          src="https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/email.svg"
+          width={40}
+          height={40}
         />
       </Link>
       <Link href={linkedIn} target="_blank">
         <Image
           alt="GitHub"
           className={styles.icon}
-          src="github.svg"
-          width={30}
-          height={30}
+          src="https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/github.svg"
+          width={40}
+          height={40}
         />
       </Link>
       <div className={styles.verticalLine}></div>

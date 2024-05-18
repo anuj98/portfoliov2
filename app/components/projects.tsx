@@ -18,7 +18,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
               <Image
                 src={project.image_url}
                 alt={project.name}
-                width={500}
+                width={600}
                 height={300}
                 className={`${styles.listItem__image}`}
               />
@@ -50,7 +50,7 @@ export default function Projects({ projects }: { projects: Project[] }) {
               <Image
                 src={project.image_url}
                 alt={project.name}
-                width={500}
+                width={600}
                 height={300}
                 className={`${styles.leftMargin} ${styles.listItem__image}`}
               />

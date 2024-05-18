@@ -130,9 +130,9 @@ async function main() {
   const data = await response.json();
 
   const client = await db.connect();
-  await seedPersonalDetails(client, data["personal_details"]);
+  // await seedPersonalDetails(client, data["personal_details"]);
   await seedExperience(client, data["experience"]);
-  await seedHobbies(client, data["hobbies"]);
+  // await seedHobbies(client, data["hobbies"]);
 
   await client.end();
 }
