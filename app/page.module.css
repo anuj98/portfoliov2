@@ -1,9 +1,4 @@
 .main {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem; */
   min-height: 100vh;
 }
 
@@ -22,4 +17,18 @@
 
 .headerContent_link {
   padding-left: 0.5rem;
+}
+
+.contentWrapper {
+  width: 70%;
+  margin: 2rem auto 0 auto;
+}
+
+.footer {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Reddit Mono", monospace;
+  color: rgb(0, 0, 0);
 }

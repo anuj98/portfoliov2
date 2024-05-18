@@ -1,0 +1,37 @@
+.projects {
+  margin: 5rem auto 0 auto;
+  height: fit-content;
+  font-family: "Reddit Mono", monospace;
+}
+
+.title {
+  color: rgb(14, 107, 51);
+  font-size: 2rem;
+}
+
+.listItem {
+  margin-top: 2rem;
+  display: flex;
+}
+
+.listItem__name {
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 600;
+  padding-bottom: 1rem;
+}
+
+.leftMargin {
+  margin-left: 2rem;
+}
+
+.listItem__text {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.listItem__image {
+  box-shadow: 5px 5px 10px 1px rgb(14, 107, 51);
+}

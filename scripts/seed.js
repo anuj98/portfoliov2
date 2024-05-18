@@ -53,8 +53,7 @@ async function seedExperience(client, data) {
     job_title VARCHAR(100) NOT NULL,
     company VARCHAR(100) NOT NULL,
     location VARCHAR(255) NOT NULL,
-    summary VARCHAR(255) NOT NULL,
-    technology VARCHAR(255) NOT NULL,
+    details TEXT NOT NULL,
     start_date VARCHAR(20) NOT NULL,
     end_date VARCHAR(20) NOT NULL
     )`;
@@ -66,8 +65,8 @@ async function seedExperience(client, data) {
       data.map((d) => {
         const id = randomUUID();
         return client.sql`
-        INSERT INTO experience (id, job_title, company, location, summary, technology, start_date, end_date)
-        VALUES (${id}, ${d["job_title"]}, ${d["company"]}, ${d["location"]}, ${d["summary"]}, ${d["technology"]}, ${d["start_date"]}, ${d["end_date"]})
+        INSERT INTO experience (id, job_title, company, location, details, start_date, end_date)
+        VALUES (${id}, ${d["job_title"]}, ${d["company"]}, ${d["location"]}, ${d["details"]}, ${d["start_date"]}, ${d["end_date"]})
         ON CONFLICT (id) DO NOTHING;
       `;
       })

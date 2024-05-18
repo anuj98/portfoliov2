@@ -1,15 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./about.module.css";
-import Hobby from "./hobby";
-import { fetchHobbies, fetchPersonalDetails } from "../db/data";
+import styles from "@/app/components/about.module.css";
+import Hobby from "@/app/components/hobby";
+import { PersonalDetails, Hobby as HobbyDetails } from "@/app/db/models";
 
-export default async function About() {
-  const [personalDetails, hobbies] = await Promise.all([
-    fetchPersonalDetails(),
-    fetchHobbies(),
-  ]);
-
+export default async function About({
+  personalDetails,
+  hobbies,
+}: {
+  personalDetails: PersonalDetails;
+  hobbies: HobbyDetails[];
+}) {
   const getHobbyItems = () => {
     return hobbies.map((hobby) => (
       <Hobby

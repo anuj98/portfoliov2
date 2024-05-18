@@ -12,8 +12,6 @@
 
 
 .about {
-    width: 70%;
-    margin: 2rem auto 0 auto;
     height: fit-content;
     font-family: "Reddit Mono", monospace;
 }

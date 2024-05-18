@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import styles from "./navBar.module.css";
+import styles from "@/app/components/navBar.module.css";
 
 const MENU_LIST = [
-  { text: "About", href: "/#about" },
-  { text: "Experience", href: "/#experience" },
-  { text: "Projects", href: "/#projects" },
+  { text: "About", href: "/" },
+  { text: "Experience", href: "#experience" },
+  { text: "Projects", href: "#projects" },
 ];
 
 export default function Navbar() {

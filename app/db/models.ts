@@ -9,9 +9,15 @@ export interface Experience {
     job_title: string;
     company: string;
     location: string;
-    technology: string;
+    details: string;
     start_date: string;
     end_date: string;
+}
+
+export interface Detail {
+    project_summary: string;
+    work_done: string[];
+    technology: string;
 }
 
 export interface PersonalDetails {
@@ -23,4 +29,13 @@ export interface PersonalDetails {
     linkedin: string;
     github: string;
     resume_url: string;
+}
+
+export interface Project {
+    id: string;
+    name: string;
+    technology: string;
+    summary: string;
+    image_url: string;
+    link: string;
 }

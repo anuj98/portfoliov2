@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./about.module.css";
+import styles from "@/app/components/about.module.css";
 
 export default function Hobby({
   alt,

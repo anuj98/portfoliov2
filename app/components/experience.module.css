@@ -1,0 +1,58 @@
+.experience {
+  margin: 5rem auto 0 auto;
+  height: fit-content;
+  font-family: "Reddit Mono", monospace;
+}
+
+.experience__title {
+  color: rgb(14, 107, 51);
+  font-size: 2rem;
+}
+
+.experience__wrapper {
+  margin-top: 1.3rem;
+  display: flex;
+  color: rgb(0, 0, 0);
+}
+
+.experience__list {
+  width: 25%;
+}
+
+.experiece__listItem {
+  padding: 1rem 1rem 1rem 1rem;
+  border: 0.2rem solid rgb(14, 107, 51);
+  cursor: pointer;
+}
+
+.experience__listItemSelected {
+  background-color: rgb(14, 107, 51);
+  color:rgb(255, 255, 255);
+}
+
+.experiece__listItemDate {
+  font-style: italic;
+}
+
+.experience__detailWrapper {
+  width: 75%;
+  margin-left: 2rem;
+}
+
+.experience__detail {
+  margin-bottom: 2rem;
+}
+
+.projectSummary {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.workDone {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+}
+
+.technology {
+  margin-top: 0.5rem;
+}
