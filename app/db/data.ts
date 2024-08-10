@@ -65,7 +65,8 @@ export async function fetchProjects() {
           technology: "Next.js, PostgreSQL, Vercel, Node, Tailwind CSS",
           summary:
             "A practice project for learning Next JS. It includes some charts and shimmer UI.",
-          image_url: "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/images/nextjsdashboard-bVN40lHMqpj9gymeboHysW90vtKlAN.png",
+          image_url:
+            "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/images/nextjsdashboard-bVN40lHMqpj9gymeboHysW90vtKlAN.png",
           link: "https://nextjs-dashboard-6gcautjld-anuj-upadhyayas-projects.vercel.app/",
         },
         {
@@ -74,11 +75,12 @@ export async function fetchProjects() {
           technology: "Next.js, PostgreSQL, Vercel, Node",
           summary:
             "It is a interactive portfolio site showcasing experiences and personal achievements.",
-          image_url: "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/images/portfolio-qT3FGHL1l7lUJWnTWHOTkBo9Az6YcS.png",
+          image_url:
+            "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/images/portfolio-qT3FGHL1l7lUJWnTWHOTkBo9Az6YcS.png",
           link: "https://portfolio-blue-mu-56.vercel.app/",
         },
-      ]
-    }
+      ],
+    };
 
     return data.rows;
   } catch (error) {

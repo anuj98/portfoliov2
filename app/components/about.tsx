@@ -1,10 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 import styles from "@/app/components/about.module.css";
 import Hobby from "@/app/components/hobby";
 import { PersonalDetails, Hobby as HobbyDetails } from "@/app/db/models";
 
-export default async function About({
+export default function About({
   personalDetails,
   hobbies,
 }: {
@@ -43,15 +44,11 @@ export default async function About({
             className={`${styles.about__resume} ${styles.about__resumeSlide}`}
             type="button"
             title="Download Resume"
+            onClick={() => {
+              window.location.href = personalDetails.resume_url;
+            }}
           >
-            <Link
-              href={{
-                pathname: "/resume",
-                query: { doc: personalDetails.resume_url },
-              }}
-            >
-              Check out my resume!
-            </Link>
+            Check out my resume!
           </button>
         </div>
         <div className={styles.iconRight}>

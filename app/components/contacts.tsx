@@ -13,7 +13,7 @@ export default function Contacts({
 }) {
   return (
     <div className={styles.contacts}>
-      <Link href={gitHub} target="_blank">
+      <Link href={linkedIn} target="_blank">
         <Image
           alt="linkedin"
           className={styles.icon}
@@ -31,7 +31,7 @@ export default function Contacts({
           height={40}
         />
       </Link>
-      <Link href={linkedIn} target="_blank">
+      <Link href={gitHub} target="_blank">
         <Image
           alt="GitHub"
           className={styles.icon}
