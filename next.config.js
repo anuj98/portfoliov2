@@ -9,6 +9,12 @@ module.exports = {
           port: "",
           pathname: "/images/**",
         },
+        {
+          protocol: "https",
+          hostname: "vmdi8qakqy5un7sl.public.blob.vercel-storage.com",
+          port: "",
+          pathname: "/icons/**",
+        },
       ],
     },
   };

@@ -1,0 +1,39 @@
+.btnContainer {
+    position: relative;
+    cursor: pointer;
+    width: 10rem;
+    height: 2rem;
+    border: 0.1rem solid rgb(14, 107, 51);
+    outline: none;
+    margin-top: 1.3rem;
+}
+
+.btnContainer.slide::before {
+    content: '';
+    color: rgb(14, 107, 51);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+    border: 1px solid rgb(14, 107, 51);
+    background-color: rgb(14, 107, 51);
+    transition: transform 300ms ease-in-out;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.btnContainer.slide:hover::before,
+.btnContainer.slide:focus::before {
+    transform: scaleX(1);
+}
+
+.btnContainer.slide {
+    z-index: 1;
+}
+
+.btnContainer.slide:hover,
+.btnContainer.slide:focus {
+    color: rgb(255, 255, 255);
+}

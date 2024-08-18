@@ -1,5 +1,5 @@
 import { sql } from "@vercel/postgres";
-import { Experience, Hobby, PersonalDetails } from "./models";
+import { Experience, Hobby, PersonalDetails, Project, Skill } from "./models";
 
 export async function fetchPersonalDetails() {
   try {
@@ -57,34 +57,36 @@ export async function fetchExperience() {
 
 export async function fetchProjects() {
   try {
-    const data = {
-      rows: [
-        {
-          id: "1",
-          name: "Sales Dashboard",
-          technology: "Next.js, PostgreSQL, Vercel, Node, Tailwind CSS",
-          summary:
-            "A practice project for learning Next JS. It includes some charts and shimmer UI.",
-          image_url:
-            "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/images/nextjsdashboard-bVN40lHMqpj9gymeboHysW90vtKlAN.png",
-          link: "https://nextjs-dashboard-6gcautjld-anuj-upadhyayas-projects.vercel.app/",
-        },
-        {
-          id: "2",
-          name: "Personal Portfolio",
-          technology: "Next.js, PostgreSQL, Vercel, Node",
-          summary:
-            "It is a interactive portfolio site showcasing experiences and personal achievements.",
-          image_url:
-            "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/images/portfolio-qT3FGHL1l7lUJWnTWHOTkBo9Az6YcS.png",
-          link: "https://portfolio-blue-mu-56.vercel.app/",
-        },
-      ],
-    };
+    const data = await sql<Project>`
+        SELECT id,
+        name,
+        technology,
+        summary,
+        image_url,
+        link,
+        github
+        FROM projects;`;
 
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch experience data.");
+    throw new Error("Failed to fetch projects data.");
+  }
+}
+
+export async function fetchSkills() {
+  try {
+    const data = await sql<Skill>`
+        SELECT id,
+        name,
+        rating,
+        category,
+        subCategory
+        FROM skills;`;
+
+    return data.rows;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch skills data.");
   }
 }

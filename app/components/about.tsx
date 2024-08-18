@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "@/app/components/about.module.css";
 import Hobby from "@/app/components/hobby";
 import { PersonalDetails, Hobby as HobbyDetails } from "@/app/db/models";
+import Button from "./button";
 
 export default function About({
   personalDetails,
@@ -40,16 +41,14 @@ export default function About({
           <div className={styles.about__descriptionGreet}>
             {personalDetails?.summary}
           </div>
-          <button
-            className={`${styles.about__resume} ${styles.about__resumeSlide}`}
-            type="button"
-            title="Download Resume"
+          <Button
+            text="Check out my resume!"
+            title="Downloa Resume"
+            isPrimary={false}
             onClick={() => {
               window.location.href = personalDetails.resume_url;
             }}
-          >
-            Check out my resume!
-          </button>
+          />
         </div>
         <div className={styles.iconRight}>
           <Image

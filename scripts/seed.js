@@ -1,5 +1,4 @@
 const { db } = require("@vercel/postgres");
-const { randomUUID } = require("crypto");
 
 async function seedPersonalDetails(client, data) {
   try {
@@ -22,10 +21,9 @@ async function seedPersonalDetails(client, data) {
     console.log("Created 'personal_details' table successfully");
 
     // Insert data into the "personal_details" table
-    const id = randomUUID();
     const insertedUsers = await client.sql`
-          INSERT INTO personal_details (id, person_name, summary, phno, email, linkedin, github, resume_url)
-          VALUES (${id}, ${data["person_name"]}, ${data["summary"]}, ${data["phno"]}, ${data["email"]}, ${data["linkedin"]}, ${data["github"]}, ${data["resume_url"]})
+          INSERT INTO personal_details (person_name, summary, phno, email, linkedin, github, resume_url)
+          VALUES (${data["person_name"]}, ${data["summary"]}, ${data["phno"]}, ${data["email"]}, ${data["linkedin"]}, ${data["github"]}, ${data["resume_url"]})
           ON CONFLICT (id) DO NOTHING;
         `;
 
@@ -63,10 +61,9 @@ async function seedExperience(client, data) {
     // Insert data into the "experience" table
     const insertedExperiences = await Promise.all(
       data.map((d) => {
-        const id = randomUUID();
         return client.sql`
-        INSERT INTO experience (id, job_title, company, location, details, start_date, end_date)
-        VALUES (${id}, ${d["job_title"]}, ${d["company"]}, ${d["location"]}, ${d["details"]}, ${d["start_date"]}, ${d["end_date"]})
+        INSERT INTO experience (job_title, company, location, details, start_date, end_date)
+        VALUES (${d["job_title"]}, ${d["company"]}, ${d["location"]}, ${d["details"]}, ${d["start_date"]}, ${d["end_date"]})
         ON CONFLICT (id) DO NOTHING;
       `;
       })
@@ -102,10 +99,9 @@ async function seedHobbies(client, data) {
     // Insert data into the "hobbies" table
     const insertedHobbies = await Promise.all(
       data.map((d) => {
-        const id = randomUUID();
         return client.sql`
-          INSERT INTO hobbies (id, name, icon_url)
-          VALUES (${id}, ${d["name"]}, ${d["icon_url"]})
+          INSERT INTO hobbies (name, icon_url)
+          VALUES (${d["name"]}, ${d["icon_url"]})
           ON CONFLICT (id) DO NOTHING;
         `;
       })
@@ -123,6 +119,88 @@ async function seedHobbies(client, data) {
   }
 }
 
+async function seedProjects(client, data) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    await client.sql`DROP TABLE IF EXISTS projects`;
+
+    // Create "personal_details" table if it does not exist
+    const createTable = await client.sql`
+    CREATE TABLE IF NOT EXISTS projects(
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    technology VARCHAR(255) NOT NULL,
+    summary VARCHAR(255) NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    link VARCHAR(255) NOT NULL,
+    github VARCHAR(255) NOT NULL
+    )`;
+
+    console.log("Created 'projects' table successfully");
+
+    // Insert data into the "projects" table
+    const insertedProjects = await Promise.all(
+      data.map((d) => {
+        return client.sql`
+          INSERT INTO projects (name, technology, summary, image_url, link, github)
+          VALUES (${d["name"]}, ${d["technology"]}, ${d["summary"]}, ${d["image_url"]}, ${d["link"]}, ${d["github"]})
+          ON CONFLICT (id) DO NOTHING;
+        `;
+      })
+    );
+
+    console.log(`Seeded ${insertedProjects.length} projects`);
+
+    return {
+      createTable,
+      projects: insertedProjects,
+    };
+  } catch (error) {
+    console.log("Error seeding projects", error);
+    throw error;
+  }
+}
+
+async function seedSkills(client, data) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+    await client.sql`DROP TABLE IF EXISTS skills`;
+
+    // Create "personal_details" table if it does not exist
+    const createTable = await client.sql`
+    CREATE TABLE IF NOT EXISTS skills(
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    rating SMALLINT NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    subCategory VARCHAR(255) NOT NULL
+    )`;
+
+    console.log("Created 'skills' table successfully");
+
+    // Insert data into the "projects" table
+    const insertedSkills = await Promise.all(
+      data.map((d) => {
+        return client.sql`
+          INSERT INTO skills (name, rating, category, subCategory)
+          VALUES (${d["name"]}, ${d["rating"]}, ${d["category"]}, ${d["subCategory"]})
+          ON CONFLICT (id) DO NOTHING;
+        `;
+      })
+    );
+
+    console.log(`Seeded ${insertedSkills.length} skills`);
+
+    return {
+      createTable,
+      skills: insertedSkills,
+    };
+  } catch (error) {
+    console.log("Error seeding skills", error);
+    throw error;
+  }
+}
+
 async function main() {
   const response = await fetch(
     "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/portfolio-data.json"
@@ -130,9 +208,11 @@ async function main() {
   const data = await response.json();
 
   const client = await db.connect();
-  // await seedPersonalDetails(client, data["personal_details"]);
+  await seedPersonalDetails(client, data["personal_details"]);
   await seedExperience(client, data["experience"]);
-  // await seedHobbies(client, data["hobbies"]);
+  await seedHobbies(client, data["hobbies"]);
+  await seedProjects(client, data["projects"]);
+  await seedSkills(client, data["skills"]);
 
   await client.end();
 }

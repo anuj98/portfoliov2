@@ -9,15 +9,18 @@ import {
   fetchHobbies,
   fetchPersonalDetails,
   fetchProjects,
+  fetchSkills,
 } from "@/app/db/data";
+import Skills from "./components/skills";
 
 export default async function Home() {
-  const [personalDetails, hobbies, experienceList, projects] =
+  const [personalDetails, hobbies, experienceList, projects, skills] =
     await Promise.all([
       fetchPersonalDetails(),
       fetchHobbies(),
       fetchExperience(),
       fetchProjects(),
+      fetchSkills(),
     ]);
 
   const getCurrentYear = () => {
@@ -29,6 +32,7 @@ export default async function Home() {
       <Navbar />
       <div className={styles.contentWrapper}>
         <About personalDetails={personalDetails} hobbies={hobbies} />
+        <Skills skills={skills} />
         <Experience experienceList={experienceList} />
         <Projects projects={projects} />
       </div>

@@ -38,4 +38,13 @@ export interface Project {
     summary: string;
     image_url: string;
     link: string;
+    github: string;
+}
+
+export interface Skill {
+    id: string;
+    name: string;
+    rating: number;
+    category: string;
+    subCategory: string;
 }
