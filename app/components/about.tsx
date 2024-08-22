@@ -13,7 +13,7 @@ export default function About({
   personalDetails: PersonalDetails;
   hobbies: HobbyDetails[];
 }) {
-  const getHobbyItems = () => {
+  function getHobbyItems() {
     return hobbies.map((hobby) => (
       <Hobby
         key={hobby.id}
@@ -22,7 +22,7 @@ export default function About({
         text={hobby.name}
       />
     ));
-  };
+  }
 
   return (
     <section id="about" className={styles.about}>

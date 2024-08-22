@@ -46,5 +46,5 @@ export interface Skill {
     name: string;
     rating: number;
     category: string;
-    subCategory: string;
+    subcategory: string;
 }

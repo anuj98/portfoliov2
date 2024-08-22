@@ -26,20 +26,20 @@ export default function Experience({
 }) {
   const [selectedTabId, setSelectedTabId] = useState("");
 
-  const sortExperience = () => {
+  function sortExperience() {
     return experienceList.sort((a, b) => {
       const sd1 = new Date(a.start_date);
       const sd2 = new Date(b.start_date);
       return sd2.getTime() - sd1.getTime();
     });
-  };
+  }
 
   useEffect(() => {
     const list = sortExperience();
     if (list.length > 0) setSelectedTabId(list[0].id);
   }, [experienceList]);
 
-  const getDateRange = (startDate: string, endDate: string) => {
+  function getDateRange(startDate: string, endDate: string) {
     const startDateObj = new Date(startDate);
 
     const formattedStartDateObj = `${
@@ -57,7 +57,7 @@ export default function Experience({
     }
 
     return `${formattedStartDateObj} - ${formattedEndDateObj}`;
-  };
+  }
 
   const getExperienceDetails = () => {
     const selectedExperience = experienceList.find(
@@ -67,7 +67,10 @@ export default function Experience({
       const details: Detail[] = JSON.parse(selectedExperience.details);
       return details.map((detail) => {
         return (
-          <div key={detail.project_summary} className={styles.experience__detail}>
+          <div
+            key={detail.project_summary}
+            className={styles.experience__detail}
+          >
             <div className={styles.projectSummary}>
               {detail.project_summary}
             </div>
@@ -76,7 +79,10 @@ export default function Experience({
                 <li key={`${detail.project_summary} ${work}`}>{work}</li>
               ))}
             </ul>
-            <div className={styles.technology}><strong>Technology: </strong>{detail.technology}</div>
+            <div className={styles.technology}>
+              <strong>Technology: </strong>
+              {detail.technology}
+            </div>
           </div>
         );
       });
