@@ -24,19 +24,22 @@ export default function Experience({
 }: {
   experienceList: ExperienceModel[];
 }) {
-  const [selectedTabId, setSelectedTabId] = useState("");
+  const [selectedTab, setSelectedTab] = useState<{
+    id: string;
+    index: number;
+  }>({ id: "", index: 0 });
 
   function sortExperience() {
     return experienceList.sort((a, b) => {
       const sd1 = new Date(a.start_date);
       const sd2 = new Date(b.start_date);
-      return sd2.getTime() - sd1.getTime();
+      return sd1.getTime() - sd2.getTime();
     });
   }
 
   useEffect(() => {
     const list = sortExperience();
-    if (list.length > 0) setSelectedTabId(list[0].id);
+    if (list.length > 0) setSelectedTab({ id: list[list.length - 1].id, index: list.length - 1 });
   }, [experienceList]);
 
   function getDateRange(startDate: string, endDate: string) {
@@ -59,65 +62,100 @@ export default function Experience({
     return `${formattedStartDateObj} - ${formattedEndDateObj}`;
   }
 
-  const getExperienceDetails = () => {
+  const renderExperienceDetails = () => {
     const selectedExperience = experienceList.find(
-      (experience) => experience.id === selectedTabId
+      (experience) => experience.id === selectedTab.id
     );
     if (selectedExperience && selectedExperience.details.length > 0) {
       const details: Detail[] = JSON.parse(selectedExperience.details);
-      return details.map((detail) => {
-        return (
-          <div
-            key={detail.project_summary}
-            className={styles.experience__detail}
-          >
-            <div className={styles.projectSummary}>
-              {detail.project_summary}
-            </div>
-            <ul className={styles.workDone}>
-              {detail.work_done.map((work) => (
-                <li key={`${detail.project_summary} ${work}`}>{work}</li>
-              ))}
-            </ul>
-            <div className={styles.technology}>
-              <strong>Technology: </strong>
-              {detail.technology}
-            </div>
-          </div>
-        );
-      });
+      return (
+        <div className={styles.experience__detail_wrapper}>
+          {details.map((detail) => {
+            return (
+              <div
+                key={detail.project_summary}
+                className={styles.experience__detail}
+              >
+                <div className={styles.projectSummary}>
+                  {detail.project_summary}
+                </div>
+                <ul className={styles.workDone}>
+                  {detail.work_done.map((work) => (
+                    <li key={`${detail.project_summary} ${work}`}>{work}</li>
+                  ))}
+                </ul>
+                <div className={styles.technology}>
+                  <strong>Technology: </strong>
+                  {detail.technology}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
     }
     return <></>;
   };
+
+  function renderCheckMark() {
+    return (
+      <span className={styles.checkmark}>
+        <div className={styles.checkmark_stem}></div>
+        <div className={styles.checkmark_kick}></div>
+      </span>
+    );
+  }
+
+  function renderExperienceTimeline() {
+    const data = sortExperience();
+    return (
+      <div className={styles.experience__timeline}>
+        {data.map((experience, index) => (
+          <div key={experience.id} className={styles.level}>
+            <div
+              className={`${styles.line} ${
+                index <= selectedTab.index
+                  ? styles.line_dark
+                  : styles.line_light
+              }`}
+            ></div>
+            <div className={styles.timeline_point}>
+              <div className={styles.timeline_detail}>
+                <p>{experience.company}</p>
+                <p>{experience.job_title}</p>
+                <p>
+                  {getDateRange(experience.start_date, experience.end_date)}
+                </p>
+              </div>
+              <div
+                className={styles.circle}
+                onClick={() =>
+                  setSelectedTab({ id: experience.id, index: index })
+                }
+              >
+                <div
+                  className={`${
+                    selectedTab.id === experience.id ? styles.inner_circle : ""
+                  }`}
+                ></div>
+                {index < selectedTab.index ? renderCheckMark() : <></>}
+              </div>
+            </div>
+          </div>
+        ))}
+        <div className={styles.line_dotted}></div>
+      </div>
+    );
+  }
 
   return (
     <section id="experience" className={styles.experience}>
       <div className={styles.experience__title}>Experience</div>
       {/* For tabs */}
       <div className={styles.experience__wrapper}>
-        <div className={styles.experience__list}>
-          {sortExperience().map((experience) => (
-            <div
-              key={experience.id}
-              className={`${styles.experiece__listItem} ${
-                selectedTabId === experience.id
-                  ? styles.experience__listItemSelected
-                  : ""
-              }`}
-              onClick={() => setSelectedTabId(experience.id)}
-            >
-              <div>{experience.company}</div>
-              <div>{experience.job_title}</div>
-              <div className={styles.experiece__listItemDate}>
-                {getDateRange(experience.start_date, experience.end_date)}
-              </div>
-            </div>
-          ))}
-        </div>
+        {renderExperienceTimeline()}
         {/* For tab content */}
-        <div className={styles.experience__detailWrapper}>
-          {getExperienceDetails()}
-        </div>
+        {renderExperienceDetails()}
       </div>
     </section>
   );

@@ -59,8 +59,26 @@
   transition: all 0.2s;
 }
 
-.nav__link:hover {
-  font-weight: bold;
+.nav__item {
+  display: inline-block;
+  position: relative;
+}
+
+.nav__item::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 0.2rem;
+  bottom: -5px;
+  left: 0;
+  background-color: rgb(14, 107, 51);
+  transform-origin: bottom left;
+  transition: transform 0.3s ease-out;
+}
+
+.nav__item:hover::after {
+  transform: scaleX(1);
 }
 
 .center {
@@ -93,7 +111,7 @@
     transition: all 0.2s;
   }
 
-  .nav__link:hover:before {
+  .nav__link:hover::before {
     width: 100%;
   }
 }

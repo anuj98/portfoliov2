@@ -48,8 +48,8 @@ export default function Navbar() {
               key={menu.text}
             >
               <Link
-                className={`nav__item ${
-                  activeIdx === idx ? styles.active : ""
+                className={`${styles.nav__item}${
+                  activeIdx === idx ? ` ${styles.active}` : ""
                 }`}
                 href={menu.href}
               >
