@@ -39,7 +39,8 @@ export default function Experience({
 
   useEffect(() => {
     const list = sortExperience();
-    if (list.length > 0) setSelectedTab({ id: list[list.length - 1].id, index: list.length - 1 });
+    if (list.length > 0)
+      setSelectedTab({ id: list[list.length - 1].id, index: list.length - 1 });
   }, [experienceList]);
 
   function getDateRange(startDate: string, endDate: string) {
@@ -128,7 +129,11 @@ export default function Experience({
                 </p>
               </div>
               <div
-                className={styles.circle}
+                className={`${styles.circle} ${
+                  index <= selectedTab.index
+                    ? styles.circle_dark
+                    : styles.circle_light
+                }`}
                 onClick={() =>
                   setSelectedTab({ id: experience.id, index: index })
                 }

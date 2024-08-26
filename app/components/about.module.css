@@ -20,6 +20,16 @@
     display: flex;
 }
 
+.image_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about__intro_details {
+    margin-left: 1.5rem;
+}
+
 .about__introGreet {
     color: rgb(14, 107, 51);
     margin-top: 1rem;
@@ -62,6 +72,10 @@
 }
 
 @media screen and (max-width: 768px) {
+    .about__intro {
+        display: block;
+    }
+    
     .about__hobbiesItem {
         width: min-content;
     }

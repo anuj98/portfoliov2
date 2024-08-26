@@ -8,7 +8,7 @@
 .cardWrapper .card {
   position: relative;
   perspective: 1000px;
-  width: 550px;
+  width: 450px;
   height: 300px;
 }
 
@@ -81,13 +81,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .cardWrapper .card {
-        width: 500px;
-    }
-}
-
-@media screen and (max-width: 425px) {
-    .cardWrapper .card {
-        width: 300px;
+    .projectName {
+      font-size: 1rem;
     }
 }

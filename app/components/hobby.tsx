@@ -12,7 +12,7 @@ export default function Hobby({
 }) {
   return (
     <div className={styles.about__hobbiesItem}>
-      <Image alt={alt} src={src} width={100} height={100} />
+      <Image alt={alt} src={src} width={100} height={100} loading="lazy" />
       {text}
     </div>
   );

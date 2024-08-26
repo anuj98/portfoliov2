@@ -13,6 +13,9 @@
 .experience__wrapper {
   margin-top: 1.3rem;
   color: rgb(0, 0, 0);
+  border: 1px solid;
+  border-radius: 10px;
+  padding-top: 1rem;
 }
 
 .experiece__listItemDate {
@@ -81,8 +84,16 @@
   cursor: pointer;
 }
 
-.inner_circle {
+.circle_light {
+  background: rgb(153, 197, 152);
+}
+
+.circle_dark {
   background: rgb(14, 107, 51);
+}
+
+.inner_circle {
+  background: rgb(153, 197, 152);
   border-radius: 50%;
   width: 1.5rem;
   height: 1.5rem;
@@ -91,10 +102,8 @@
 .experience__detail_wrapper {
   height: 20rem;
   overflow: auto;
-  border: 1px solid;
-  border-top: 0px;
+  border-top: 1px solid rgb(153, 197, 152);
   padding: 1rem;
-  border-radius: 10px;
   scrollbar-width: 0;
   -ms-overflow-style: none;
 }
@@ -106,6 +115,15 @@
 
 .experience__detail {
   margin-bottom: 2rem;
+  animation: fadeIn 2s;
+  -moz-animation: fadeIn 2s;
+  -o-animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 .projectSummary {
@@ -136,7 +154,7 @@
   position: absolute;
   width: 3px;
   height: 13px;
-  background-color: rgb(14, 107, 51);
+  background-color: rgb(153, 197, 152);
   left: 11px;
   top: 4px;
 }
@@ -145,7 +163,7 @@
   position: absolute;
   width: 4px;
   height: 3px;
-  background-color: rgb(14, 107, 51);
+  background-color: rgb(153, 197, 152);
   left: 8px;
   top: 14px;
 }

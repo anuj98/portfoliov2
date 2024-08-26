@@ -20,15 +20,17 @@ export default function Contacts({
           src="https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/linkedin.svg"
           width={40}
           height={40}
+          loading="lazy"
         />
       </Link>
-      <Link href={`mailto:${email}`} target="_blank" >
+      <Link href={`mailto:${email}`} target="_blank">
         <Image
           alt="email"
           className={styles.icon}
           src="https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/email.svg"
           width={40}
           height={40}
+          loading="lazy"
         />
       </Link>
       <Link href={gitHub} target="_blank">
@@ -38,6 +40,7 @@ export default function Contacts({
           src="https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/github.svg"
           width={40}
           height={40}
+          loading="lazy"
         />
       </Link>
       <div className={styles.verticalLine}></div>

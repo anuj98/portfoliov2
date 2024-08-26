@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import styles from "@/app/components/about.module.css";
 import Hobby from "@/app/components/hobby";
 import { PersonalDetails, Hobby as HobbyDetails } from "@/app/db/models";
@@ -26,15 +27,19 @@ export default function About({
   return (
     <section id="about" className={styles.about}>
       <div className={styles.about__intro}>
-        {/* <div className={styles.iconLeft}>
+        <div className={styles.image_container}>
           <Image
-            alt="Code start tag"
-            src="code-start.svg"
-            width={100}
-            height={100}
+            src="/IMG_2403_change.jpg"
+            alt="Anuj's profile image"
+            height={200}
+            width={200}
+            style={{
+              borderRadius: "50%",
+              boxShadow: "2px 2px 10px 2px rgb(136, 136, 136)",
+            }}
           />
-        </div> */}
-        <div>
+        </div>
+        <div className={styles.about__intro_details}>
           <div className={styles.about__introGreet}>Hi! I am</div>
           <p className={styles.about__introName}>{personalDetails?.name}</p>
           <div className={styles.about__descriptionGreet}>
@@ -49,14 +54,6 @@ export default function About({
             }}
           />
         </div>
-        {/* <div className={styles.iconRight}>
-          <Image
-            alt="Code end tag"
-            src="code-end.svg"
-            width={100}
-            height={100}
-          />
-        </div> */}
       </div>
       <div className={styles.about__hobbies}>
         <p className={styles.about__hobbiesTitle}>
