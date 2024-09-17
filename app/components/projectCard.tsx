@@ -43,40 +43,42 @@ export default function ProjectCard({ project }: { project: Project }) {
           ></div>
           <div className={`${styles.listItem__text}`}>
             <div className={styles.projectName}>{project.name}</div>
-            {project.summary}
-            <div>
-              <strong>Technologies: </strong>
-              {project.technology}
-            </div>
-            <div className={styles.project_redirections}>
-              <Link
-                href={project.link}
-                className={styles.redirection_item}
-                target="_blank"
-              >
-                <Image
-                  src={
-                    "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/redirect-icon.png"
-                  }
-                  alt={project.name}
-                  width={30}
-                  height={30}
-                />
-              </Link>
-              <Link
-                href={project.github}
-                className={styles.redirection_item}
-                target="_blank"
-              >
-                <Image
-                  src={
-                    "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/github.svg"
-                  }
-                  alt={project.name}
-                  width={30}
-                  height={30}
-                />
-              </Link>
+            <div className="projectCard_project_redirections">
+              {project.summary}
+              <div>
+                <strong>Technologies: </strong>
+                {project.technology}
+              </div>
+              <div className={styles.project_redirections}>
+                <Link
+                  href={project.link}
+                  className={styles.redirection_item}
+                  target="_blank"
+                >
+                  <Image
+                    src={
+                      "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/redirect-icon.png"
+                    }
+                    alt={project.name}
+                    width={30}
+                    height={30}
+                  />
+                </Link>
+                <Link
+                  href={project.github}
+                  className={styles.redirection_item}
+                  target="_blank"
+                >
+                  <Image
+                    src={
+                      "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/github.svg"
+                    }
+                    alt={project.name}
+                    width={30}
+                    height={30}
+                  />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
