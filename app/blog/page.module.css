@@ -1,0 +1,27 @@
+.blogGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem 1.5rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.blogMain {
+  padding: 2rem;
+  min-height: 60vh;
+  font-family: "Reddit Mono", monospace;
+}
+
+.blogTitleHeader {
+  color: rgb(14, 107, 51);
+  margin-bottom: 1rem;
+}
+
+.blogIntro {
+  font-size: 1.1rem;
+  color: #222;
+}
+
+.blogEmpty {
+  color: #888;
+}

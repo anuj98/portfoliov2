@@ -6,8 +6,9 @@ import styles from "@/app/components/navBar.module.css";
 
 const MENU_LIST = [
   { text: "About", href: "/" },
-  { text: "Experience", href: "#experience" },
-  { text: "Projects", href: "#projects" },
+  { text: "Experience", href: "/#experience" },
+  { text: "Projects", href: "/#projects" },
+  { text: "Blog", href: "/blog" },
 ];
 
 export default function Navbar() {

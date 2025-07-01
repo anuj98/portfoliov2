@@ -1,5 +1,4 @@
 import styles from "@/app/page.module.css";
-import Navbar from "@/app/components/navBar";
 import About from "@/app/components/about";
 import Experience from "@/app/components/experience";
 import Projects from "@/app/components/projects";
@@ -11,7 +10,7 @@ import {
   fetchProjects,
   fetchSkills,
 } from "@/app/db/data";
-import Skills from "./components/skills";
+import Skills from "@/app/components/skills";
 
 export default async function Home() {
   const [personalDetails, hobbies, experienceList, projects, skills] =
@@ -29,7 +28,6 @@ export default async function Home() {
   };
   return (
     <main className={styles.main}>
-      <Navbar />
       <div className={styles.contentWrapper}>
         <About personalDetails={personalDetails} hobbies={hobbies} />
         <Skills skills={skills} />
