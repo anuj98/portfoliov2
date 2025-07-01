@@ -10,8 +10,53 @@
   text-align: center;
 }
 
+.projectWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0;
+}
+
 .listItem {
-  margin-top: 2rem;
-  margin-left: 1rem;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Prevent overlap and ensure each slide fits in the container */
+.slick-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: auto !important;
+}
+
+@media screen and (max-width: 1200px) {
+  .projects {
+    max-width: 98vw;
+    width: 100%;
+  }
+  .listItem {
+    max-width: 320px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .listItem {
+    max-width: 90vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .listItem {
+    max-width: 98vw;
+    padding: 0 2vw;
+  }
 }

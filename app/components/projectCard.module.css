@@ -1,3 +1,61 @@
+/* For overlay container in the front image */
+.frontImageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.frontImageBg {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.overlayDark {
+  background: rgba(0, 0, 0, 0.45);
+}
+.overlayLight {
+  background: rgba(255, 255, 255, 0.35);
+}
+.overlayDefault {
+  background: rgba(0, 0, 0, 0.25);
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.dynamicTextDark {
+  color: #fff;
+  text-shadow: 0 2px 8px #000;
+}
+.dynamicTextLight {
+  color: #222;
+  text-shadow: 0 2px 8px #fff;
+}
+
+/* Overlay for image brightness detection */
+.overlayDark {
+  background: rgba(0, 0, 0, 0.45);
+}
+.overlayLight {
+  background: rgba(255, 255, 255, 0.35);
+}
+.overlayDefault {
+  background: rgba(0, 0, 0, 0.25);
+}
 .justClass.cardWrapper {
   display: grid;
   place-items: center;

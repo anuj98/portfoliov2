@@ -1,6 +1,8 @@
 "use client";
 
+
 import { useState } from "react";
+import { useImageBrightness } from "../hooks/useImageBrightness";
 import Image from "next/image";
 import styles from "@/app/components/projectCard.module.css";
 import { Project } from "../db/models";
@@ -9,6 +11,7 @@ import Link from "next/link";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const [explore, setExplore] = useState<boolean>(false);
+  const { isDark } = useImageBrightness(project.image_url);
   return (
     <section className={`${styles.justClass} ${styles.cardWrapper}`}>
       <div className={styles.explore_button}>
@@ -16,23 +19,22 @@ export default function ProjectCard({ project }: { project: Project }) {
           text={explore ? "Back" : "Explore"}
           title={explore ? "Click to go back" : "Click to explore"}
           isPrimary={true}
-          onClick={() => {
-            if (explore) setExplore(false);
-            else setExplore(true);
-          }}
+          onClick={() => setExplore((prev) => !prev)}
         />
       </div>
       <div className={styles.card}>
-        <div
-          className={`${styles.front} ${explore ? styles.transform180 : ""}`}
+        <div className={`${styles.front} ${explore ? styles.transform180 : ""}`}
         >
-          <div
-            style={{
-              background: `url(${project.image_url}) center no-repeat`,
-              backgroundSize: "cover",
-            }}
-            className={styles.projectImage}
-          ></div>
+          <div className={styles.frontImageContainer}>
+            <div
+              className={`${styles.projectImage} ${styles.frontImageBg}`}
+              style={{ backgroundImage: `url(${project.image_url})` }}
+            ></div>
+            {/* Overlay for text contrast */}
+            <div
+              className={`${styles.overlay} ${isDark === null ? styles.overlayDefault : isDark ? styles.overlayDark : styles.overlayLight}`}
+            ></div>
+          </div>
         </div>
         <div className={`${styles.back} ${explore ? styles.transform0 : ""}`}>
           <div
@@ -41,7 +43,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             }}
             className={`${styles.projectImage} ${styles.blur_effect}`}
           ></div>
-          <div className={`${styles.listItem__text}`}>
+          <div className={`${styles.listItem__text} ${isDark ? styles.dynamicTextDark : styles.dynamicTextLight}`}>
             <div className={styles.projectName}>{project.name}</div>
             <div className="projectCard_project_redirections">
               {project.summary}

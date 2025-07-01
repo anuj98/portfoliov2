@@ -66,7 +66,7 @@ export async function fetchProjects() {
         link,
         github
         FROM projects;`;
-
+    console.log("Projects Data:", data.rows);
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
