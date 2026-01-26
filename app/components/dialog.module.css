@@ -1,0 +1,88 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.dialog {
+  width: 600px;
+  max-height: 80vh;
+  background: #f7f7f7;
+  border-radius: 12px;
+  border: 2px solid rgb(14, 107, 51);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.title {
+  color: rgb(14, 107, 51);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin-top: 4px;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgb(153, 197, 152);
+}
+
+.divider span {
+  margin: 0 10px;
+  color: rgb(14, 107, 51);
+  font-weight: 600;
+}
+
+/* Content */
+.content {
+  overflow-y: auto;
+}
+
+/* Footer */
+.footer {
+  margin-top: 1rem;
+}
+
+/* Button */
+.button {
+  width: 100%;
+  padding: 10px;
+  background: rgb(14, 107, 51);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
