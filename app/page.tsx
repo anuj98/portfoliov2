@@ -31,7 +31,7 @@ export default async function Home() {
       <div className={styles.contentWrapper}>
         <About personalDetails={personalDetails} hobbies={hobbies} />
         <Skills skills={skills} />
-        <Experience experienceList={experienceList} />
+        <Experience experiences={experienceList} />
         <Projects projects={projects} />
       </div>
       <Contacts

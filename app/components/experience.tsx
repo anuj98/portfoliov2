@@ -1,8 +1,41 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
+import { Dialog } from "@/app/components/dialog";
+import Button from "./button";
 import styles from "@/app/components/experience.module.css";
-import { Experience as ExperienceModel, Detail } from "@/app/db/models";
+import { Experience as ExperienceModel } from "../db/models";
+
+interface ExperienceProps {
+  experiences: ExperienceModel[];
+}
+
+export type Detail = {
+  project_summary: string;
+  work_done: string[];
+  technology: string;
+};
+
+export function parseDetails(details: string): Detail[] {
+  try {
+    // Clean unwanted characters (optional but safer)
+    const cleaned = details.replace(/\r\n/g, "").replace(/\n/g, "").trim();
+
+    const parsed = JSON.parse(cleaned);
+
+    // Ensure structure is valid
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed.map((item) => ({
+      project_summary: item.project_summary || "",
+      work_done: Array.isArray(item.work_done) ? item.work_done : [],
+      technology: item.technology || "",
+    }));
+  } catch (error) {
+    console.error("Invalid details JSON:", error);
+    return [];
+  }
+}
 
 const MONTH_NAMES = [
   "Jan",
@@ -19,149 +52,176 @@ const MONTH_NAMES = [
   "Dec",
 ];
 
-export default function Experience({
-  experienceList,
-}: {
-  experienceList: ExperienceModel[];
-}) {
-  const [selectedTab, setSelectedTab] = useState<{
-    id: string;
-    index: number;
-  }>({ id: "", index: 0 });
+export default function Experience({ experiences = [] }: ExperienceProps) {
+  const [activeCompanyIndex, setActiveCompanyIndex] = useState(0);
+  const [selectedExperience, setSelectedExperience] =
+    useState<ExperienceModel | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const tabContainerRef = useRef<HTMLDivElement>(null);
+  // Group experiences by company
+  const companies = Array.from(new Set(experiences.map((exp) => exp.company)));
+  const activeCompany = companies[activeCompanyIndex];
 
-  function sortExperience() {
-    return experienceList.sort((a, b) => {
+  // Sort experiences by start date (newest first for display)
+  const sortedExperiences = [...experiences]
+    .filter((exp) => exp.company === activeCompany)
+    .sort((a, b) => {
       const sd1 = new Date(a.start_date);
       const sd2 = new Date(b.start_date);
-      return sd1.getTime() - sd2.getTime();
+      return sd2.getTime() - sd1.getTime(); // Descending order (newest first)
     });
-  }
 
-  useEffect(() => {
-    const list = sortExperience();
-    if (list.length > 0)
-      setSelectedTab({ id: list[list.length - 1].id, index: list.length - 1 });
-  }, [experienceList]);
+  const scrollTabs = (direction: "left" | "right") => {
+    if (tabContainerRef.current) {
+      const scrollAmount = 200;
+      const newScrollLeft =
+        direction === "left"
+          ? tabContainerRef.current.scrollLeft - scrollAmount
+          : tabContainerRef.current.scrollLeft + scrollAmount;
 
-  function getDateRange(startDate: string, endDate: string) {
+      tabContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const getDateRange = (startDate: string, endDate: string) => {
     const startDateObj = new Date(startDate);
-
-    const formattedStartDateObj = `${
+    const formattedStartDate = `${
       MONTH_NAMES[startDateObj.getMonth()]
     } ${startDateObj.getFullYear()}`;
 
-    let formattedEndDateObj;
-    if (endDate.length === 0) {
-      formattedEndDateObj = "Present";
-    } else {
-      const endDateObj = new Date(endDate);
-      formattedEndDateObj = `${
-        MONTH_NAMES[endDateObj.getMonth()]
-      } ${endDateObj.getFullYear()}`;
-    }
+    const formattedEndDate =
+      endDate.length === 0
+        ? "Present"
+        : `${MONTH_NAMES[new Date(endDate).getMonth()]} ${new Date(
+            endDate
+          ).getFullYear()}`;
 
-    return `${formattedStartDateObj} - ${formattedEndDateObj}`;
-  }
-
-  const renderExperienceDetails = () => {
-    const selectedExperience = experienceList.find(
-      (experience) => experience.id === selectedTab.id
-    );
-    if (selectedExperience && selectedExperience.details.length > 0) {
-      const details: Detail[] = JSON.parse(selectedExperience.details);
-      return (
-        <div className={styles.experience__detail_wrapper}>
-          {details.map((detail) => {
-            return (
-              <div
-                key={detail.project_summary}
-                className={styles.experience__detail}
-              >
-                <div className={styles.projectSummary}>
-                  {detail.project_summary}
-                </div>
-                <ul className={styles.workDone}>
-                  {detail.work_done.map((work) => (
-                    <li key={`${detail.project_summary} ${work}`}>{work}</li>
-                  ))}
-                </ul>
-                <div className={styles.technology}>
-                  <strong>Technology: </strong>
-                  {detail.technology}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
-    return <></>;
+    return `${formattedStartDate} - ${formattedEndDate}`;
   };
 
-  function renderCheckMark() {
-    return (
-      <span className={styles.checkmark}>
-        <div className={styles.checkmark_stem}></div>
-        <div className={styles.checkmark_kick}></div>
-      </span>
-    );
-  }
-
-  function renderExperienceTimeline() {
-    const data = sortExperience();
-    return (
-      <div className={styles.experience__timeline}>
-        {data.map((experience, index) => (
-          <div key={experience.id} className={styles.level}>
-            <div
-              className={`${styles.line} ${
-                index <= selectedTab.index
-                  ? styles.line_dark
-                  : styles.line_light
-              }`}
-            ></div>
-            <div className={styles.timeline_point}>
-              <div className={styles.timeline_detail}>
-                <p>{experience.company}</p>
-                <p>{experience.job_title}</p>
-                <p>
-                  {getDateRange(experience.start_date, experience.end_date)}
-                </p>
-              </div>
-              <div
-                className={`${styles.circle} ${
-                  index <= selectedTab.index
-                    ? styles.circle_dark
-                    : styles.circle_light
-                }`}
-                onClick={() =>
-                  setSelectedTab({ id: experience.id, index: index })
-                }
-              >
-                <div
-                  className={`${
-                    selectedTab.id === experience.id ? styles.inner_circle : ""
-                  }`}
-                ></div>
-                {index < selectedTab.index ? renderCheckMark() : <></>}
-              </div>
-            </div>
-          </div>
-        ))}
-        <div className={styles.line_dotted}></div>
-      </div>
-    );
-  }
+  const openExperienceDetails = (experience: ExperienceModel) => {
+    console.log(experience);
+    setSelectedExperience(experience);
+    setIsDialogOpen(true);
+  };
 
   return (
     <section id="experience" className={styles.experience}>
       <div className={styles.experience__title}>Experience</div>
-      {/* For tabs */}
       <div className={styles.experience__wrapper}>
-        {renderExperienceTimeline()}
-        {/* For tab content */}
-        {renderExperienceDetails()}
+        <div className={styles.experience__tab_navigation}>
+          <button
+            className={styles.experience__scroll_button}
+            onClick={() => scrollTabs("left")}
+          >
+            {"<"}
+          </button>
+          <div
+            className={styles.experience__tab_container}
+            ref={tabContainerRef}
+          >
+            {companies.map((company, index) => (
+              <button
+                key={company}
+                onClick={() => setActiveCompanyIndex(index)}
+                className={`${styles.experience__tab_button} ${
+                  index === activeCompanyIndex
+                    ? styles.experience__tab_buttonActive
+                    : ""
+                }`}
+              >
+                <span>{company}</span>
+              </button>
+            ))}
+          </div>
+          <button
+            className={styles.experience__scroll_button}
+            onClick={() => scrollTabs("right")}
+          >
+            {">"}
+          </button>
+        </div>
+
+        <div className={styles.experience__content}>
+          <div className={styles.experience__content_list}>
+            {sortedExperiences.map((experience, index) => (
+              <div
+                key={experience.id}
+                className={styles.experience__content_list_item}
+              >
+                <div className={styles.experienceHeader}>
+                  <div className={styles.experienceInfo}>
+                    <h3 className={styles.jobTitle}>{experience.job_title}</h3>
+                    <p className={styles.companyName}>{experience.company}</p>
+                    <p className={styles.location}>{experience.location}</p>
+                    <p className={styles.dateRange}>
+                      {getDateRange(experience.start_date, experience.end_date)}
+                    </p>
+                  </div>
+                  {experience.details && (
+                    <div className={styles.viewDetailsButton}>
+                      <Button
+                        text="View details"
+                        title="View experience details"
+                        isPrimary={false}
+                        onClick={() => openExperienceDetails(experience)}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
+      {selectedExperience && (
+        <Dialog.Root open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+          <Dialog.Header
+            title={selectedExperience.job_title}
+            subtitle={`${selectedExperience.company} • ${selectedExperience.location}`}
+            meta={getDateRange(
+              selectedExperience.start_date,
+              selectedExperience.end_date
+            )}
+          />
+
+          <Dialog.Divider label="DETAILS" />
+
+          <Dialog.Content>
+            {selectedExperience.details.length === 0 ? (
+              <p>No details available</p>
+            ) : (
+              parseDetails(selectedExperience.details).map((d, index) => (
+                <div key={index} className={styles.detailSection}>
+                  <p className={styles.detailProject}>
+                    <strong>Project:</strong> {d.project_summary}
+                  </p>
+
+                  <ul className={styles.detailWorkDone}>
+                    {d.work_done.map((w, i) => (
+                      <li key={i}>{w}</li>
+                    ))}
+                  </ul>
+
+                  <p className={styles.detailTechnology}>
+                    <strong>Technology:</strong> {d.technology}
+                  </p>
+                </div>
+              ))
+            )}
+          </Dialog.Content>
+
+          <Dialog.Footer>
+            <Dialog.Button onClick={() => setIsDialogOpen(false)}>
+              Close
+            </Dialog.Button>
+          </Dialog.Footer>
+        </Dialog.Root>
+      )}
     </section>
   );
 }
