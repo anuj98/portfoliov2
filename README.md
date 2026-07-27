@@ -17,7 +17,6 @@ This portfolio is built using the following technologies:
 - **Node.js** (runtime)
 - **dotenv** (environment variable management)
 - **ESLint** (linting)
-- **Slick Carousel** (project slider)
 - **Vercel** (deployment)
 
 ## Solution Architecture

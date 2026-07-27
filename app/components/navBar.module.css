@@ -1,117 +1,270 @@
-.link {
-  text-decoration: none;
-  color: inherit;
-}
-.logo {
-  color: rgb(14, 107, 51);
-}
+/* ── NavBar ── mobile first ── */
+
 .header {
   margin: 0;
   padding: 0;
   outline: none;
   box-sizing: border-box;
   font-family: "Reddit Mono", monospace;
-}
-.sticky {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 2;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
+
 .nav {
   display: flex;
-  padding: 16px;
+  padding: 0.875rem 1.25rem;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(223, 222, 222);
-  box-shadow: 5px 0px 10px 2px rgb(136, 136, 136);
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
 }
+
+/* Logo */
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.06em;
+}
+
+/* Backdrop */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  background: var(--backdrop-bg);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Right-side group: toggle + hamburger */
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Theme toggle */
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  outline: none;
+}
+
+.themeToggle:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Hamburger */
 .nav__menubar {
   display: flex;
   flex-direction: column;
   row-gap: 6px;
   cursor: pointer;
+  padding: 6px;
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  background: none;
+  border: none;
+  outline: none;
 }
+
+.nav__menubar:hover {
+  background: var(--bg-surface-hover);
+}
+
 .nav__menubar div {
-  width: 40px;
-  height: 4px;
-  background-color: black;
+  width: 26px;
+  height: 2.5px;
+  background-color: var(--text-muted);
   border-radius: 2px;
+  transition: background-color 0.2s;
 }
+
+.nav__menubar:hover div {
+  background-color: var(--accent);
+}
+
+.nav__menubar div {
+  transition: background-color 0.2s;
+}
+
+/* Close button inside drawer */
+.nav__closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav__closeBtn:hover {
+  color: var(--accent);
+  background: var(--bg-surface-hover);
+}
+
+/* Slide-in drawer — mobile */
 .nav__menulist {
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 60px;
-  width: 288px;
-  row-gap: 24px;
-  right: -288px;
-  padding: 24px 16px;
-  transition: all 0.2s;
-  min-height: calc(100vh - 60px);
-  background-color: rgb(223, 222, 222);
+  top: 0;
+  right: -100%;
+  width: min(288px, 82vw);
+  padding: 5rem 1.5rem 2rem;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100dvh;
+  background: var(--drawer-bg);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-left: 1px solid var(--glass-border);
+  z-index: 9;
 }
+
 .nav__menulist.active {
   right: 0;
 }
-.nav__link {
-  font-size: 18px;
-  position: relative;
-  transition: all 0.2s;
-}
 
+/* Nav link — mobile */
 .nav__item {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   position: relative;
+  font-size: 1rem;
+  color: var(--text-muted);
+  padding: 0.875rem 0.5rem;
+  border-bottom: 1px solid var(--glass-border);
+  transition: color 0.2s;
+  min-height: 44px;
+  text-decoration: none;
 }
 
-.nav__item::after {
+.nav__item::before {
   content: "";
   position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 0.2rem;
-  bottom: -5px;
-  left: 0;
-  background-color: rgb(14, 107, 51);
-  transform-origin: bottom left;
-  transition: transform 0.3s ease-out;
+  left: -1.5rem;
+  width: 3px;
+  height: 0;
+  background: var(--accent-gradient);
+  border-radius: 0 2px 2px 0;
+  transition: height 0.2s ease;
 }
 
-.nav__item:hover::after {
-  transform: scaleX(1);
+.nav__item:hover,
+.nav__item.active {
+  color: var(--accent);
 }
 
-.center {
-  min-height: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.nav__item:hover::before,
+.nav__item.active::before {
+  height: 100%;
 }
 
-@media screen and (min-width: 768px) {
+/* ── Desktop layout ── */
+
+@media (min-width: 768px) {
+  .nav {
+    padding: 1rem 2rem;
+  }
+
   .nav__menubar {
     display: none;
   }
+
+  .nav__closeBtn {
+    display: none;
+  }
+
+  /* On desktop, push the actions group to the far right after nav links */
+  .nav__actions {
+    order: 1;
+  }
+
   .nav__menulist {
     position: unset;
     flex-direction: row;
     min-height: fit-content;
     width: fit-content;
-    column-gap: 24px;
+    column-gap: 2rem;
     align-items: center;
-  }
-  .nav__link::before {
-    content: "";
-    position: absolute;
-    width: 0%;
-    height: 6px;
-    bottom: -16px;
-    left: 0;
-    background-color: black;
-    transition: all 0.2s;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-left: none;
+    padding: 0;
+    transition: none;
   }
 
-  .nav__link:hover::before {
-    width: 100%;
+  .nav__item {
+    font-size: 0.875rem;
+    border-bottom: none;
+    padding: 0.375rem 0;
+    min-height: unset;
   }
+
+  .nav__item::before {
+    display: none;
+  }
+
+  /* Gradient underline on hover */
+  .nav__item::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .nav__item:hover::after,
+  .nav__item.active::after {
+    transform: scaleX(1);
+  }
+
+  .nav__item:hover,
+  .nav__item.active {
+    color: var(--text);
+  }
+
 }

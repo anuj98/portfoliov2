@@ -1,82 +1,119 @@
-.iconLeft {
-    margin-right: 1.5rem;
-    display: flex;
-    align-items: flex-start;
-}
-
-.iconRight {
-    margin-left: 1rem;
-    display: flex;
-    align-items: flex-end;
-}
-
+/* ── About — mobile first ── */
 
 .about {
-    height: fit-content;
-    font-family: "Reddit Mono", monospace;
+  padding-top: 3.5rem;
+  font-family: "Reddit Mono", monospace;
 }
 
+/* Hero row */
 .about__intro {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
 }
 
 .image_container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Glowing profile image */
+.profileImage {
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--accent), var(--glow-md);
+  animation: profile-glow 3s ease-in-out infinite alternate;
+  display: block;
 }
 
 .about__intro_details {
-    margin-left: 1.5rem;
+  max-width: 580px;
 }
 
 .about__introGreet {
-    color: rgb(14, 107, 51);
-    margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
+/* Animated gradient name */
 .about__introName {
-    color: rgb(14, 107, 51);
-    font-size: 2rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: gradient-shift 4s ease infinite;
+  font-size: clamp(2rem, 8vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
 }
 
 .about__descriptionGreet {
-    margin-top: 2rem;
-    color: inherit;
-    color: black;
-    font-size: 1.3rem;
+  color: var(--text-muted);
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
 }
 
+/* Hobbies */
 .about__hobbies {
-    margin-top: 2rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
 }
 
 .about__hobbiesTitle {
-    margin-top: 3rem;
-    color: rgb(14, 107, 51);
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
 }
 
 .about__hobbiesList {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
 }
 
 .about__hobbiesItem {
-    padding-top: 2rem;
-    padding-right: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  width: 160px;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  cursor: default;
 }
 
-@media screen and (max-width: 768px) {
-    .about__intro {
-        display: block;
-    }
-    
-    .about__hobbiesItem {
-        width: min-content;
-    }
+.about__hobbiesItem:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--accent-border-hover);
+  color: var(--text);
+}
+
+/* ── Desktop layout ── */
+
+@media (min-width: 768px) {
+  .about__intro {
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .about__hobbiesList {
+    justify-content: flex-start;
+  }
 }

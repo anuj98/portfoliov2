@@ -3,6 +3,7 @@ import About from "@/app/components/about";
 import Experience from "@/app/components/experience";
 import Projects from "@/app/components/projects";
 import Contacts from "@/app/components/contacts";
+import ScrollReveal from "@/app/components/scrollReveal";
 import {
   fetchExperience,
   fetchHobbies,
@@ -26,14 +27,31 @@ export default async function Home() {
     const date = new Date();
     return date.getFullYear();
   };
+
   return (
     <main className={styles.main}>
-      <div className={styles.contentWrapper}>
-        <About personalDetails={personalDetails} hobbies={hobbies} />
-        <Skills skills={skills} />
-        <Experience experiences={experienceList} />
-        <Projects projects={projects} />
+      {/* Animated blob background */}
+      <div className={styles.blobContainer} aria-hidden="true">
+        <div className={`${styles.blob} ${styles.blob1}`} />
+        <div className={`${styles.blob} ${styles.blob2}`} />
+        <div className={`${styles.blob} ${styles.blob3}`} />
       </div>
+
+      <div className={styles.contentWrapper}>
+        <ScrollReveal>
+          <About personalDetails={personalDetails} hobbies={hobbies} />
+        </ScrollReveal>
+        <ScrollReveal delay={80}>
+          <Skills skills={skills} />
+        </ScrollReveal>
+        <ScrollReveal delay={80}>
+          <Experience experiences={experienceList} />
+        </ScrollReveal>
+        <ScrollReveal delay={80}>
+          <Projects projects={projects} />
+        </ScrollReveal>
+      </div>
+
       <Contacts
         gitHub={personalDetails.github}
         linkedIn={personalDetails.linkedin}

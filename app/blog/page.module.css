@@ -1,27 +1,66 @@
+/* ── Blog page — mobile first ── */
+
+.blogMain {
+  padding: 1.25rem;
+  min-height: 60vh;
+  font-family: "Reddit Mono", monospace;
+  color: var(--text);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .blogMain {
+    padding: 2rem;
+  }
+}
+
 .blogGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem 1.5rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
   width: 100%;
   margin-top: 2rem;
 }
 
-.blogMain {
-  padding: 2rem;
-  min-height: 60vh;
-  font-family: "Reddit Mono", monospace;
+@media (min-width: 480px) {
+  .blogGrid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
 }
 
 .blogTitleHeader {
-  color: rgb(14, 107, 51);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
   margin-bottom: 1rem;
+  position: relative;
+}
+
+.blogTitleHeader::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px;
 }
 
 .blogIntro {
-  font-size: 1.1rem;
-  color: #222;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 600px;
 }
 
 .blogEmpty {
-  color: #888;
+  color: var(--text-dim);
+  font-size: 0.875rem;
 }
