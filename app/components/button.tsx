@@ -7,15 +7,17 @@ export default function Button({
   text,
   isPrimary,
   onClick,
+  className,
 }: {
   title: string;
   text: string;
-  isPrimary: boolean,
+  isPrimary: boolean;
   onClick?: () => void;
+  className?: string;
 }) {
   return (
     <button
-      className={`${styles.btnContainer} ${styles.slide}`}
+      className={`${styles.btnContainer} ${styles.slide}${className ? ` ${className}` : ""}`}
       type="button"
       title={title}
       onClick={() => onClick?.()}

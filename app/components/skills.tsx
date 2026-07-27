@@ -26,9 +26,9 @@ export default function Skills({ skills }: { skills: Skill[] }) {
     return (
       <div
         style={{
-          background: `linear-gradient(90deg, rgb(14, 107, 51) ${left}%, rgb(153, 197, 152) ${right}%)`,
-          height: "5px",
-          marginTop: "10px",
+          background: `linear-gradient(90deg, var(--accent) ${left}%, var(--rating-bar-bg) ${right}%)`,
+          height: "4px",
+          marginTop: "6px",
           borderRadius: "10px"
         }}
       ></div>

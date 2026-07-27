@@ -78,7 +78,7 @@ export default function ProjectsNew({ projects }: { projects: Project[] }) {
             className={styles.scrollDot}
             style={{
               width: activeIndex === index ? "24px" : "8px",
-              backgroundColor: activeIndex === index ? "#10b981" : "#cbd5e1",
+              backgroundColor: activeIndex === index ? "var(--dot-active)" : "var(--dot-inactive)",
             }}
           />
         ))}

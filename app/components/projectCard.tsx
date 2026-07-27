@@ -20,6 +20,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           title={explore ? "Click to go back" : "Click to explore"}
           isPrimary={true}
           onClick={() => setExplore((prev) => !prev)}
+          className={isDark === false ? styles.btn_on_light : undefined}
         />
       </div>
       <div className={styles.card}>

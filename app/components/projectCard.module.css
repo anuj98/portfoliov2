@@ -1,4 +1,5 @@
-/* For overlay container in the front image */
+/* ── ProjectCard — mobile first ── */
+
 .frontImageContainer {
   position: relative;
   width: 100%;
@@ -19,13 +20,13 @@
 }
 
 .overlayDark {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5);
 }
 .overlayLight {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.3);
 }
 .overlayDefault {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.35);
 }
 .overlay {
   position: absolute;
@@ -39,36 +40,32 @@
 
 .dynamicTextDark {
   color: #fff;
-  text-shadow: 0 2px 8px #000;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
 }
 .dynamicTextLight {
-  color: #222;
-  text-shadow: 0 2px 8px #fff;
+  color: #f1f5f9;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
-/* Overlay for image brightness detection */
-.overlayDark {
-  background: rgba(0, 0, 0, 0.45);
-}
-.overlayLight {
-  background: rgba(255, 255, 255, 0.35);
-}
-.overlayDefault {
-  background: rgba(0, 0, 0, 0.25);
-}
+/* Card container */
 .justClass.cardWrapper {
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   display: grid;
   place-items: center;
-  color: #2C3539;
   position: relative;
 }
 
+/* Mobile: compact card */
 .cardWrapper .card {
   position: relative;
   perspective: 1000px;
-  width: 450px;
-  height: 300px;
+  width: 230px;
+  height: 280px;
+  transition: filter 0.3s ease;
+}
+
+.cardWrapper:hover .card {
+  filter: drop-shadow(0 0 18px var(--card-glow));
 }
 
 .cardWrapper .card .front,
@@ -79,19 +76,26 @@
   right: 0;
   bottom: 0;
   backface-visibility: hidden;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   transition: 0.6s;
-  box-shadow: 1px 1px 10px 1px rgb(14, 107, 51);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px var(--glass-border);
 }
 
 .cardWrapper .back {
   transform: rotateY(180deg);
+  background: var(--card-back-bg);
+  backdrop-filter: blur(8px);
 }
 
 .cardWrapper .explore_button {
   position: absolute;
-  z-index: 1;
-  bottom: 1.5rem;
+  z-index: 3;
+  bottom: 1rem;
+}
+
+.btn_on_light {
+  background: var(--btn-on-light-bg) !important;
+  backdrop-filter: blur(6px);
 }
 
 .cardWrapper .card .transform0 {
@@ -109,55 +113,102 @@
 }
 
 .blur_effect {
-  position: fixed;
-  -webkit-filter: blur(8px);
-  filter: blur(8px);
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  -webkit-filter: blur(14px);
+  filter: blur(14px);
+  transform: scale(1.06);
+  opacity: 0.35;
 }
 
+/* Back-card text content */
 .projectName {
-  font-size: 1.3rem;
-  font-style: italic;
-  font-weight: 600;
-  padding-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  padding-bottom: 0.625rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .listItem__text {
-  position: fixed;
-  padding: 2rem 2rem 1rem 2rem;
+  position: absolute;
+  inset: 0;
+  padding: 1.25rem 1rem 1rem;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  font-size: 80%;
+  justify-content: flex-start;
+  font-size: 0.75rem;
+  color: var(--text);
+  overflow-y: auto;
+  z-index: 2;
+  scrollbar-width: none;
+}
+
+.listItem__text::-webkit-scrollbar {
+  display: none;
 }
 
 .project_redirections {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
+  margin-top: auto;
+  padding-top: 0.625rem;
+  display: flex;
+  gap: 0.625rem;
+  justify-content: center;
 }
 
 .redirection_item {
-    margin-right: 1rem;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 1024px) {
+.redirection_item img {
+  filter: brightness(0) invert(1);
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.redirection_item:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.redirection_item:hover img {
+  opacity: 1;
+}
+
+/* ── Breakpoints ── */
+
+@media (min-width: 480px) {
   .cardWrapper .card {
-    width: 300px;
+    width: 270px;
+    height: 290px;
+  }
+}
+
+@media (min-width: 768px) {
+  .cardWrapper .card {
+    width: 340px;
     height: 300px;
   }
   .projectName {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 }
 
-@media screen and (max-width: 768px) {
-    .cardWrapper .card {
-      width: 250px;
-      height: 300px;
-    }
-    .projectName {
-      font-size: 1rem;
-    }
+@media (min-width: 1024px) {
+  .cardWrapper .card {
+    width: 420px;
+    height: 300px;
+  }
 }

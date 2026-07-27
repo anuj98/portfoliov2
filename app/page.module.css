@@ -1,6 +1,104 @@
+/* ── Page shell ── */
+
 .main {
   min-height: 100vh;
+  position: relative;
+  isolation: isolate;
 }
+
+/* ── Animated blob background ── */
+
+.blobContainer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: blob-float 12s ease-in-out infinite;
+}
+
+/* Top-right: green */
+.blob1 {
+  width: min(600px, 80vw);
+  height: min(600px, 80vw);
+  top: -8%;
+  right: -8%;
+  background: var(--blob-1);
+  animation-duration: 13s;
+}
+
+/* Mid-left: teal */
+.blob2 {
+  width: min(500px, 70vw);
+  height: min(500px, 70vw);
+  top: 40%;
+  left: -8%;
+  background: var(--blob-2);
+  animation-duration: 17s;
+  animation-direction: reverse;
+}
+
+/* Bottom-right: blue */
+.blob3 {
+  width: min(400px, 60vw);
+  height: min(400px, 60vw);
+  bottom: -5%;
+  right: 15%;
+  background: var(--blob-3);
+  animation-duration: 21s;
+  animation-delay: 3s;
+}
+
+/* ── Content wrapper — mobile first ── */
+
+.contentWrapper {
+  position: relative;
+  z-index: 1;
+  padding: 0 1.25rem 5rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .contentWrapper {
+    padding: 0 1.75rem 5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .contentWrapper {
+    max-width: 780px;
+    padding: 0 2rem 5rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .contentWrapper {
+    max-width: 1100px;
+  }
+}
+
+/* ── Footer ── */
+
+.footer {
+  position: relative;
+  z-index: 1;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Reddit Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ── Legacy header classes (unused) ── */
 
 .header {
   display: flex;
@@ -17,18 +115,4 @@
 
 .headerContent_link {
   padding-left: 0.5rem;
-}
-
-.contentWrapper {
-  width: 70%;
-  margin: 2rem auto 0 auto;
-}
-
-.footer {
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Reddit Mono", monospace;
-  color: rgb(0, 0, 0);
 }

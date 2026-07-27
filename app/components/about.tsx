@@ -33,10 +33,7 @@ export default function About({
             alt="Anuj's profile image"
             height={200}
             width={200}
-            style={{
-              borderRadius: "50%",
-              boxShadow: "2px 2px 10px 2px rgb(136, 136, 136)",
-            }}
+            className={styles.profileImage}
           />
         </div>
         <div className={styles.about__intro_details}>

@@ -1,52 +1,73 @@
+/* ── Experience — mobile first ── */
+
 .experience {
-  margin: 5rem auto 0 auto;
-  height: fit-content;
+  margin-top: 5rem;
   font-family: "Reddit Mono", monospace;
 }
 
 .experience__title {
-  color: rgb(14, 107, 51);
-  font-size: 2rem;
-  text-align: center;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
+  margin-bottom: 0.25rem;
 }
 
+.experience__title::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px;
+}
+
+/* Glass card wrapper */
 .experience__wrapper {
   width: 100%;
-  max-width: 64rem;
-  margin-left: auto;
-  margin-right: auto;
-  border: 2px solid rgb(14, 107, 51);
-  background-color: white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
+  margin-top: 1.75rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius);
   overflow: hidden;
 }
 
+/* Tab navigation */
 .experience__tab_navigation {
   display: flex;
-  align-items: center;
-  border-bottom: 2px solid rgb(14, 107, 51);
-  background-color: rgb(249, 250, 251);
+  align-items: stretch;
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--tab-nav-bg);
 }
 
 .experience__scroll_button {
-  padding: 0.75rem;
-  border-right: 2px solid rgb(14, 107, 51);
+  flex-shrink: 0;
+  padding: 0 0.875rem;
+  border: none;
+  border-right: 1px solid var(--glass-border);
   cursor: pointer;
-  transition: background-color 0.2s;
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
-  font-size: 1rem;
+  transition: background 0.2s, color 0.2s;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .experience__scroll_button:hover {
-  background-color: rgb(153, 197, 152);
+  background: var(--bg-surface-hover);
+  color: var(--accent);
 }
 
 .experience__scroll_button:last-of-type {
   border-right: none;
-  border-left: 2px solid rgb(14, 107, 51);
+  border-left: 1px solid var(--glass-border);
 }
 
 .experience__tab_container {
@@ -54,58 +75,71 @@
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.experience__tab_container::-webkit-scrollbar {
+  display: none;
 }
 
 .experience__tab_button {
   flex-shrink: 0;
   min-width: 140px;
-  padding: 0.75rem 1rem;
-  border-right: 2px solid rgb(14, 107, 51);
+  padding: 0.875rem 1rem;
+  border: none;
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.2s;
-  font-family: monospace;
-  font-size: 0.875rem;
-  background-color: rgb(249, 250, 251);
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  font-family: "Reddit Mono", monospace;
+  font-size: 0.82rem;
+  background: transparent;
+  color: var(--text-muted);
+  min-height: 44px;
 }
 
 .experience__tab_button:hover {
-  background-color: rgb(243, 244, 246);
+  background: var(--bg-surface-hover);
+  color: var(--text);
 }
 
 .experience__tab_buttonActive {
-  background-color: white;
+  background: var(--accent-dim) !important;
+  color: var(--accent) !important;
   font-weight: 600;
-  color: rgb(14, 107, 51);
+  border-bottom-color: var(--accent) !important;
+}
+
+/* Content area */
+.experience__content {
+  padding: 1.25rem;
+  min-height: 260px;
+  font-family: "Reddit Mono", monospace;
 }
 
 @media (min-width: 768px) {
-  .experience__tab_button {
-    font-size: 1rem;
+  .experience__content {
+    padding: 1.5rem;
   }
-}
-
-.experience__content {
-  padding: 1.5rem;
-  min-height: 400px;
-  font-family: monospace;
+  .experience__tab_button {
+    font-size: 0.875rem;
+  }
 }
 
 .experience__content_list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .experience__content_list_item {
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgb(153, 197, 152);
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--glass-border);
 }
 
-.experience__content_list:last-child {
+.experience__content_list_item:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .experienceHeader {
@@ -113,34 +147,41 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .experienceInfo {
   flex: 1;
+  min-width: 0;
 }
 
 .jobTitle {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: rgb(14, 107, 51);
+  color: var(--accent);
   margin-bottom: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .jobTitle {
+    font-size: 1.125rem;
+  }
 }
 
 .companyName {
   font-size: 0.875rem;
-  color: rgb(55, 65, 81);
-  margin-bottom: 0.25rem;
+  color: var(--text);
+  margin-bottom: 0.2rem;
 }
 
 .location {
-  font-size: 0.875rem;
-  color: rgb(75, 85, 99);
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 .dateRange {
   font-size: 0.75rem;
-  color: rgb(107, 114, 128);
+  color: var(--text-dim);
   font-style: italic;
   margin-top: 0.25rem;
 }
@@ -149,37 +190,38 @@
   flex-shrink: 0;
 }
 
+/* Dialog detail sections */
 .detailSection {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background-color: rgb(249, 250, 251);
-  border-left: 3px solid rgb(14, 107, 51);
-  border-radius: 0.25rem;
+  margin-bottom: 1.25rem;
+  padding: 0.875rem 1rem;
+  background: var(--bg-surface);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 .detailProject {
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
+  margin-bottom: 0.625rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: rgb(14, 107, 51);
+  color: var(--accent);
 }
 
 .detailWorkDone {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
+  margin: 0.625rem 0;
+  padding-left: 1.25rem;
 }
 
 .detailWorkDone li {
   margin-bottom: 0.5rem;
-  color: rgb(55, 65, 81);
-  line-height: 1.5;
+  color: var(--text-muted);
+  line-height: 1.55;
+  font-size: 0.85rem;
 }
 
 .detailTechnology {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: rgb(75, 85, 99);
-  font-weight: 500;
+  margin-top: 0.625rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
 }
 
 body.dialogOpen {

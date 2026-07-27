@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap");
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -7,40 +8,198 @@
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+  /* ── Dark theme (default) ── */
 
-  --primary-glow: conic-gradient(
-    from 180deg at 50% 50%,
-    #16abff33 0deg,
-    #0885ff33 55deg,
-    #54d6ff33 120deg,
-    #0071ff33 160deg,
-    transparent 360deg
-  );
-  --secondary-glow: radial-gradient(
-    rgba(241, 241, 241, 1),
-    rgba(241, 241, 241, 0)
-  );
+  /* Backgrounds */
+  --bg: #030712;
+  --bg-surface: rgba(255, 255, 255, 0.04);
+  --bg-surface-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
 
-  --tile-start-rgb: 239, 245, 249;
-  --tile-end-rgb: 228, 232, 233;
-  --tile-border: conic-gradient(
-    #00000080,
-    #00000040,
-    #00000030,
-    #00000020,
-    #00000010,
-    #00000010,
-    #00000080
-  );
+  /* Accent */
+  --accent: #22c55e;
+  --accent-2: #06d6a0;
+  --accent-dim: rgba(34, 197, 94, 0.15);
+  --accent-gradient: linear-gradient(135deg, #22c55e 0%, #06d6a0 100%);
 
-  --callout-rgb: 238, 240, 241;
-  --callout-border-rgb: 172, 175, 176;
-  --card-rgb: 180, 185, 188;
-  --card-border-rgb: 131, 134, 135;
+  /* Text */
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #475569;
+
+  /* Shadows / glow */
+  --glow-sm: 0 0 20px rgba(34, 197, 94, 0.12);
+  --glow-md: 0 0 40px rgba(34, 197, 94, 0.22);
+  --glow-lg: 0 0 80px rgba(34, 197, 94, 0.32);
+
+  /* Component-level tokens */
+  --nav-bg: rgba(3, 7, 18, 0.82);
+  --drawer-bg: rgba(3, 7, 18, 0.96);
+  --backdrop-bg: rgba(0, 0, 0, 0.45);
+  --dialog-bg: rgba(10, 15, 30, 0.96);
+  --dialog-overlay-bg: rgba(0, 0, 0, 0.65);
+  --btn-text-on-accent: #030712;
+  --blob-1: rgba(34, 197, 94, 0.10);
+  --blob-2: rgba(6, 214, 160, 0.07);
+  --blob-3: rgba(59, 130, 246, 0.06);
+  --card-back-bg: rgba(3, 7, 18, 0.94);
+  --card-glow: rgba(34, 197, 94, 0.28);
+  --btn-on-light-bg: rgba(3, 7, 18, 0.65);
+  --skill-border: rgba(34, 197, 94, 0.18);
+  --skill-hover-bg: rgba(34, 197, 94, 0.22);
+  --accent-border-hover: rgba(34, 197, 94, 0.25);
+  --tab-nav-bg: rgba(255, 255, 255, 0.02);
+  --rating-bar-bg: rgba(34, 197, 94, 0.12);
+  --dot-active: #10b981;
+  --dot-inactive: #cbd5e1;
+  --icon-filter: brightness(0) invert(1);
+  --icon-border-hover: rgba(34, 197, 94, 0.4);
+  --loader-glow: rgba(34, 197, 94, 0.25);
 }
+
+/* ── Layer 2: system light preference ── */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f8fafc;
+    --bg-surface: rgba(0, 0, 0, 0.04);
+    --bg-surface-hover: rgba(0, 0, 0, 0.07);
+    --glass-border: rgba(0, 0, 0, 0.10);
+    --accent: #16a34a;
+    --accent-2: #059669;
+    --accent-dim: rgba(22, 163, 74, 0.12);
+    --accent-gradient: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+    --text: #0f172a;
+    --text-muted: #475569;
+    --text-dim: #94a3b8;
+    --glow-sm: 0 0 20px rgba(22, 163, 74, 0.10);
+    --glow-md: 0 0 40px rgba(22, 163, 74, 0.18);
+    --glow-lg: 0 0 80px rgba(22, 163, 74, 0.25);
+    --nav-bg: rgba(248, 250, 252, 0.88);
+    --drawer-bg: rgba(248, 250, 252, 0.97);
+    --backdrop-bg: rgba(0, 0, 0, 0.35);
+    --dialog-bg: rgba(248, 250, 252, 0.97);
+    --dialog-overlay-bg: rgba(0, 0, 0, 0.50);
+    --btn-text-on-accent: #ffffff;
+    --blob-1: rgba(22, 163, 74, 0.08);
+    --blob-2: rgba(5, 150, 105, 0.06);
+    --blob-3: rgba(59, 130, 246, 0.05);
+    --card-back-bg: rgba(248, 250, 252, 0.96);
+    --card-glow: rgba(22, 163, 74, 0.22);
+    --btn-on-light-bg: rgba(248, 250, 252, 0.80);
+    --skill-border: rgba(22, 163, 74, 0.22);
+    --skill-hover-bg: rgba(22, 163, 74, 0.15);
+    --accent-border-hover: rgba(22, 163, 74, 0.30);
+    --tab-nav-bg: rgba(0, 0, 0, 0.02);
+    --rating-bar-bg: rgba(22, 163, 74, 0.10);
+    --dot-active: #16a34a;
+    --dot-inactive: #94a3b8;
+    --icon-filter: brightness(0);
+    --icon-border-hover: rgba(22, 163, 74, 0.4);
+    --loader-glow: rgba(22, 163, 74, 0.18);
+  }
+}
+
+/* ── Layer 3: explicit user toggle (overrides media query) ── */
+
+[data-theme="dark"] {
+  --bg: #030712;
+  --bg-surface: rgba(255, 255, 255, 0.04);
+  --bg-surface-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --accent: #22c55e;
+  --accent-2: #06d6a0;
+  --accent-dim: rgba(34, 197, 94, 0.15);
+  --accent-gradient: linear-gradient(135deg, #22c55e 0%, #06d6a0 100%);
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #475569;
+  --glow-sm: 0 0 20px rgba(34, 197, 94, 0.12);
+  --glow-md: 0 0 40px rgba(34, 197, 94, 0.22);
+  --glow-lg: 0 0 80px rgba(34, 197, 94, 0.32);
+  --nav-bg: rgba(3, 7, 18, 0.82);
+  --drawer-bg: rgba(3, 7, 18, 0.96);
+  --backdrop-bg: rgba(0, 0, 0, 0.45);
+  --dialog-bg: rgba(10, 15, 30, 0.96);
+  --dialog-overlay-bg: rgba(0, 0, 0, 0.65);
+  --btn-text-on-accent: #030712;
+  --blob-1: rgba(34, 197, 94, 0.10);
+  --blob-2: rgba(6, 214, 160, 0.07);
+  --blob-3: rgba(59, 130, 246, 0.06);
+  --card-back-bg: rgba(3, 7, 18, 0.94);
+  --card-glow: rgba(34, 197, 94, 0.28);
+  --btn-on-light-bg: rgba(3, 7, 18, 0.65);
+  --skill-border: rgba(34, 197, 94, 0.18);
+  --skill-hover-bg: rgba(34, 197, 94, 0.22);
+  --accent-border-hover: rgba(34, 197, 94, 0.25);
+  --tab-nav-bg: rgba(255, 255, 255, 0.02);
+  --rating-bar-bg: rgba(34, 197, 94, 0.12);
+  --dot-active: #10b981;
+  --dot-inactive: #cbd5e1;
+  --icon-filter: brightness(0) invert(1);
+  --icon-border-hover: rgba(34, 197, 94, 0.4);
+  --loader-glow: rgba(34, 197, 94, 0.25);
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-surface: rgba(0, 0, 0, 0.04);
+  --bg-surface-hover: rgba(0, 0, 0, 0.07);
+  --glass-border: rgba(0, 0, 0, 0.10);
+  --accent: #16a34a;
+  --accent-2: #059669;
+  --accent-dim: rgba(22, 163, 74, 0.12);
+  --accent-gradient: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #94a3b8;
+  --glow-sm: 0 0 20px rgba(22, 163, 74, 0.10);
+  --glow-md: 0 0 40px rgba(22, 163, 74, 0.18);
+  --glow-lg: 0 0 80px rgba(22, 163, 74, 0.25);
+  --nav-bg: rgba(248, 250, 252, 0.88);
+  --drawer-bg: rgba(248, 250, 252, 0.97);
+  --backdrop-bg: rgba(0, 0, 0, 0.35);
+  --dialog-bg: rgba(248, 250, 252, 0.97);
+  --dialog-overlay-bg: rgba(0, 0, 0, 0.50);
+  --btn-text-on-accent: #ffffff;
+  --blob-1: rgba(22, 163, 74, 0.08);
+  --blob-2: rgba(5, 150, 105, 0.06);
+  --blob-3: rgba(59, 130, 246, 0.05);
+  --card-back-bg: rgba(248, 250, 252, 0.96);
+  --card-glow: rgba(22, 163, 74, 0.22);
+  --btn-on-light-bg: rgba(248, 250, 252, 0.80);
+  --skill-border: rgba(22, 163, 74, 0.22);
+  --skill-hover-bg: rgba(22, 163, 74, 0.15);
+  --accent-border-hover: rgba(22, 163, 74, 0.30);
+  --tab-nav-bg: rgba(0, 0, 0, 0.02);
+  --rating-bar-bg: rgba(22, 163, 74, 0.10);
+  --dot-active: #16a34a;
+  --dot-inactive: #94a3b8;
+  --icon-filter: brightness(0);
+  --icon-border-hover: rgba(22, 163, 74, 0.4);
+  --loader-glow: rgba(22, 163, 74, 0.18);
+}
+
+/* ── Global keyframes (referenced by name from CSS Modules) ── */
+
+@keyframes blob-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -50px) scale(1.05); }
+  66%       { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+@keyframes profile-glow {
+  from { box-shadow: 0 0 0 3px var(--accent), var(--glow-sm); }
+  to   { box-shadow: 0 0 0 3px var(--accent), var(--glow-lg); }
+}
+
+/* ── Reset ── */
 
 * {
   box-sizing: border-box;
@@ -55,16 +214,23 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--text);
+  background-color: var(--bg);
+  padding-top: 60px; /* fixed navbar height */
 }
 
 a {
-  color: rgb(0, 0, 0);
+  color: var(--text);
   text-decoration: none;
+}
+
+/* ── Reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
 }
