@@ -1,12 +1,65 @@
 /* ── About — mobile first ── */
 
 .about {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100svh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding-top: 3.5rem;
-  font-family: "Reddit Mono", monospace;
+  padding-bottom: 4rem;
+  font-family: var(--font-sans);
 }
 
-/* Hero row */
+/* ── Background layers (particles + glow) ── */
+
+.particleBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.radialGlow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.radialGlow__large {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 700px;
+  height: 700px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+  filter: blur(120px);
+  opacity: 0.6;
+}
+
+.radialGlow__small {
+  position: absolute;
+  right: -100px;
+  bottom: 25%;
+  width: 300px;
+  height: 300px;
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+  filter: blur(80px);
+  opacity: 0.5;
+}
+
+/* ── Hero row ── */
+
 .about__intro {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,51 +80,113 @@
 }
 
 .about__intro_details {
+  position: relative;
+  z-index: 1;
   max-width: 580px;
 }
 
-.about__introGreet {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
+/* Mono eyebrow label */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-/* Animated gradient name */
+/* Name */
 .about__introName {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  background-size: 200% auto;
-  animation: gradient-shift 4s ease infinite;
-  font-size: clamp(2rem, 8vw, 3.25rem);
+  color: var(--text);
+  font-size: clamp(2.5rem, 8vw, 4.25rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   margin-bottom: 1.25rem;
 }
 
-.about__descriptionGreet {
+.nameGlow {
+  color: var(--accent);
+  text-shadow: var(--text-glow);
+}
+
+/* Typewriter */
+.typewriterWrapper {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 3vw, 1.35rem);
   color: var(--text-muted);
-  font-size: clamp(0.875rem, 2.5vw, 1rem);
-  line-height: 1.75;
+  min-height: 2.5rem; /* reserved so layout doesn't jump while typing */
   margin-bottom: 1.5rem;
 }
 
-/* Hobbies */
+.typewriterCursor {
+  color: var(--accent);
+  margin-left: 2px;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Bio */
+.about__descriptionGreet {
+  color: var(--text-muted);
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  line-height: 1.75;
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.75rem;
+}
+
+/* CTA actions */
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Social icons */
+.socials {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-surface);
+  border-radius: 8px;
+  color: var(--text-muted);
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.socialIcon:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: var(--glow-sm);
+}
+
+/* ── Hobbies ── */
+
 .about__hobbies {
-  margin-top: 3rem;
+  position: relative;
+  z-index: 1;
+  margin-top: 4rem;
   padding-top: 2rem;
   border-top: 1px solid var(--glass-border);
 }
 
 .about__hobbiesTitle {
+  font-family: var(--font-mono);
   color: var(--text-dim);
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 1.25rem;
+  text-align: center;
 }
 
 .about__hobbiesList {
@@ -81,27 +196,32 @@
   justify-content: center;
 }
 
+/* Pill tag (Hobby subcomponent renders this class) */
 .about__hobbiesItem {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.875rem 1rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--skill-border);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   color: var(--text-muted);
-  font-size: 0.75rem;
-  width: 160px;
-  text-align: center;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
   cursor: default;
 }
 
 .about__hobbiesItem:hover {
-  background: var(--bg-surface-hover);
-  border-color: var(--accent-border-hover);
-  color: var(--text);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: var(--glow-sm);
+}
+
+.about__hobbiesItem img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 /* ── Desktop layout ── */
@@ -111,6 +231,23 @@
     flex-direction: row;
     text-align: left;
     align-items: flex-start;
+  }
+
+  .about__descriptionGreet {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .actions {
+    justify-content: flex-start;
+  }
+
+  .socials {
+    justify-content: flex-start;
+  }
+
+  .about__hobbiesTitle {
+    text-align: left;
   }
 
   .about__hobbiesList {

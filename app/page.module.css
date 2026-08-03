@@ -92,7 +92,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Reddit Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--text-dim);
   border-top: 1px solid var(--glass-border);

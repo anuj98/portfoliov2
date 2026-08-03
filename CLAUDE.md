@@ -20,11 +20,15 @@ A **Next.js 16 / React 19** personal portfolio site deployed on **Vercel**. Cont
 | UI | React 19 (server + client components) |
 | Language | TypeScript 5 (strict mode) |
 | Styling | CSS Modules (no Tailwind, no CSS-in-JS) |
+| Fonts | Geist Sans / Geist Mono (`next/font/google`, exposed as CSS variables) |
+| Animation | framer-motion 12 (element entrance animations, scroll-triggered reveals) |
+| 3D | three.js + @react-three/fiber 9 (3D particle hero background) |
+| Icons | lucide-react (`Mail`, `ExternalLink`; brand icons via inline SVGs — lucide 1.x removed them) |
 | Database | Vercel Postgres → Neon (`@vercel/postgres`) |
 | Blob storage | Vercel Blob (`@vercel/blob`) |
 | Blog data | Dev.to public API (ISR, revalidate 3600s) |
 | Deployment | Vercel |
-| Linting | ESLint via `.eslintrc.json` (`next/core-web-vitals`) |
+| Linting | `next lint` was removed in Next.js 16; `.eslintrc.json` exists but the `npm run lint` script is currently non-functional |
 | Node | ≥ 18.17.0 |
 
 ---
@@ -35,7 +39,7 @@ A **Next.js 16 / React 19** personal portfolio site deployed on **Vercel**. Cont
 npm run dev       # Start development server (localhost:3000)
 npm run build     # Production build
 npm run start     # Serve production build locally
-npm run lint      # Run ESLint
+npm run lint      # BROKEN: next lint was removed in Next.js 16 — run eslint directly instead
 npm run seed      # Seed the database (requires POSTGRES_URL in .env)
 ```
 
@@ -88,7 +92,7 @@ portfoliov2/
 │   │   ├── experience.tsx        # [CLIENT] Job history with tab navigation + dialog
 │   │   ├── projects.tsx          # [CLIENT] Infinite auto-scroll carousel
 │   │   ├── projectCard.tsx       # [CLIENT] 3D flip card; canvas-based image brightness
-│   │   ├── skills.tsx            # Tech stack grouped by category (server)
+│   │   ├── skills.tsx            # [CLIENT] Tech stack grouped by category (framer-motion skill bars)
 │   │   ├── contacts.tsx          # Footer with GitHub / LinkedIn / Email (server)
 │   │   ├── navBar.tsx            # [CLIENT] Sticky header with mobile drawer + theme toggle
 │   │   ├── themeToggle.tsx       # [CLIENT] Dark/light toggle; reads/writes localStorage
@@ -97,6 +101,7 @@ portfoliov2/
 │   │   ├── button.tsx            # [CLIENT] Reusable button (primary / secondary variants)
 │   │   ├── blogCard.tsx          # Card for Dev.to blog posts (server)
 │   │   ├── hobby.tsx             # Hobby display (icon + name) (server)
+│   │   ├── particleScene.tsx     # [CLIENT] Three.js 3D particle hero (dynamic import, ssr: false)
 │   │   └── *.module.css          # Co-located CSS Module for each component
 │   ├── db/
 │   │   ├── data.ts               # All SQL queries using @vercel/postgres sql``
@@ -144,7 +149,7 @@ Browser
 | `projects.tsx` | `"use client"` | Carousel state + `setInterval` for auto-scroll |
 | `projectCard.tsx` | `"use client"` | `useImageBrightness` hook uses canvas (browser API) |
 | `dialog.tsx` | `"use client"` | Escape-key listener; open/close state |
-| `skills.tsx` | Server | Pure display — no browser APIs or event handlers |
+| `skills.tsx` | `"use client"` | Framer-motion `useInView` for animated skill bars |
 | `contacts.tsx` | Server | Pure display — no browser APIs or event handlers |
 | `blogCard.tsx` | Server | Pure display — no browser APIs or event handlers |
 | `hobby.tsx` | Server | Pure display — no browser APIs or event handlers |
@@ -263,24 +268,22 @@ Pseudo-element underline / slide animations (navBar links, button fill) use `tra
 | Keyframe | Duration | Used on |
 |---|---|---|
 | `blob-float` | 13–21 s, infinite | Background blobs in `page.module.css` |
-| `gradient-shift` | 4 s, infinite | Gradient name text in `about.module.css` |
-| `profile-glow` | 3 s, infinite alternate | Profile picture border glow |
+| `profile-glow` | 3 s, infinite alternate | Profile picture border glow in `about.module.css` |
+| `cursor-blink` | 1 s, step-end, infinite | Typewriter cursor in `about.module.css` |
 
-**Scroll-reveal animation** is handled by `scrollReveal.tsx` + `scrollReveal.module.css`:
-- `ScrollReveal` wraps any section with `opacity: 0; transform: translateY(28px)`.
-- `IntersectionObserver` (threshold 0.08) adds the `.visible` class when the element enters the viewport.
-- Staggered delays are passed via the `delay` prop (ms) and applied as `transitionDelay` inline.
-- **Respects `prefers-reduced-motion`**: the CSS module disables the transition entirely when the OS requests reduced motion.
+> Unresolved keyframe names in a CSS Module fall through to the global scope — this is how `about.module.css` can reference `cursor-blink` even though the keyframes live in `globals.css`. Same pattern as `blob-float` / `profile-glow`.
 
-Usage in `page.tsx`:
+**Scroll-reveal / entrance animations** are handled in two ways:
+- `scrollReveal.tsx` + `scrollReveal.module.css`: IntersectionObserver wrapper that fades in a whole section (`opacity: 0; translateY(28px)` → visible). Staggered `delay` prop applied as `transitionDelay`. Respects `prefers-reduced-motion`.
+- `framer-motion`: individual elements. Skills uses `useInView` to trigger animated skill bars; the About hero uses staggered `motion` elements.
+
 ```tsx
-<ScrollReveal>
-  <About … />
-</ScrollReveal>
-<ScrollReveal delay={80}>
-  <Skills … />
-</ScrollReveal>
+// Both coexist in page.tsx — ScrollReveal wraps whole sections…
+<ScrollReveal><About … /></ScrollReveal>
+<ScrollReveal delay={80}><Skills … /></ScrollReveal>
 ```
+
+`ScrollReveal` details: IntersectionObserver (threshold 0.08) adds a `.visible` class when the section enters the viewport; the `delay` prop (ms) is applied as `transitionDelay`. It **respects `prefers-reduced-motion`** — the CSS module disables the transition entirely when the OS requests reduced motion.
 
 ### Responsive Strategy
 
@@ -323,7 +326,7 @@ The root page is an async server component. It fetches all data with `Promise.al
 
 ```tsx
 // Exported as: Dialog.Root, Dialog.Header, Dialog.Divider, Dialog.Content, Dialog.Footer, Dialog.Button
-<Dialog.Root isOpen={open} onClose={() => setOpen(false)} title="…">
+<Dialog.Root open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
   <Dialog.Header title="…" subtitle="…" meta="…" />
   <Dialog.Divider label="Details" />
   <Dialog.Content>…</Dialog.Content>
@@ -395,6 +398,7 @@ Always use the `Button` component for interactive actions. Do not create one-off
 
 - `package.json` uses `overrides` to pin the entire dependency tree to React 19.2.3. If adding a package that pulls in React 18, check that the override still applies after install.
 - ESLint config is `.eslintrc.json` (classic format, `extends: next/core-web-vitals`) — not the new flat config. The `eslint-config-next` version tracks the Next.js version (`16.1.4`).
+- **`next lint` was removed in Next.js 16** — the CLI command no longer exists, so `npm run lint` errors with "Invalid project directory provided". The `.eslintrc.json` config file still ships, but no linting is wired into the toolchain. To lint, invoke ESLint directly: `npx eslint app/`.
 - `next.config.js` uses `module.exports` (CommonJS). The empty `next.config.mjs` can be ignored.
 - If third-party library types break due to React version mismatch, check and update the `overrides` block in `package.json`.
 

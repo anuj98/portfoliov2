@@ -110,7 +110,17 @@ export default function Experience({ experiences = [] }: ExperienceProps) {
 
   return (
     <section id="experience" className={styles.experience}>
-      <div className={styles.experience__title}>Experience</div>
+      <div className={styles.sectionHeader}>
+        <span className={styles.sectionGlyph}>&gt;</span>
+        <span className={styles.sectionLabel}>Work History</span>
+        <span className={styles.sectionLine} />
+      </div>
+
+      <h2 className={styles.sectionHeading}>Where I've worked</h2>
+      <p className={styles.sectionSubtitle}>
+        The roles, teams, and products I've contributed to over the years.
+      </p>
+
       <div className={styles.experience__wrapper}>
         <div className={styles.experience__tab_navigation}>
           <button
@@ -154,8 +164,15 @@ export default function Experience({ experiences = [] }: ExperienceProps) {
               >
                 <div className={styles.experienceHeader}>
                   <div className={styles.experienceInfo}>
-                    <h3 className={styles.jobTitle}>{experience.job_title}</h3>
-                    <p className={styles.companyName}>{experience.company}</p>
+                    <div className={styles.roleHeader}>
+                      <div>
+                        <h3 className={styles.jobTitle}>{experience.job_title}</h3>
+                        <p className={styles.companyName}>{experience.company}</p>
+                      </div>
+                      {experience.end_date.length === 0 && (
+                        <span className={styles.currentBadge}>Current</span>
+                      )}
+                    </div>
                     <p className={styles.location}>{experience.location}</p>
                     <p className={styles.dateRange}>
                       {getDateRange(experience.start_date, experience.end_date)}
