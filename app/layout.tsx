@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/components/navBar";
+
+export const metadata: Metadata = {
+  title: "Anuj Upadhyaya - Software Engineer Portfolio",
+  description:
+    "Personal portfolio showcasing projects, experience, and skills in software engineering",
+};
 
 const geistSans = Geist({
   subsets: ["latin"],
