@@ -1,0 +1,67 @@
+/* ── Hobbies — mobile first ── */
+
+.hobbies {
+  margin-top: 5rem;
+}
+
+.sectionHeading {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* Pill list */
+.hobbies__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* Individual hobby pill */
+.hobbies__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 9999px;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border-strong);
+  color: var(--text);
+  font-size: 0.85rem;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.hobbies__item:hover {
+  border-color: var(--accent);
+  box-shadow: var(--glow-sm);
+  background: var(--bg-surface-hover);
+  color: var(--text);
+}
+
+.hobbies__item img {
+  width: 24px;
+  height: 24px;
+  transition: filter 0.2s;
+}
+
+.hobbies__item:hover img {
+  filter: drop-shadow(0 0 4px var(--accent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobbies__item,
+  .hobbies__item img {
+    transition: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .hobbies__list {
+    justify-content: flex-start;
+  }
+}

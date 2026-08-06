@@ -185,6 +185,13 @@
   flex-wrap: wrap;
 }
 
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
 .jobTitle {
   font-size: 1rem;
   font-weight: 600;

@@ -4,14 +4,15 @@ import { Experience, Hobby, PersonalDetails, Project, Skill } from "./models";
 export async function fetchPersonalDetails() {
   try {
     const data = await sql<PersonalDetails>`
-        SELECT id, 
-        person_name AS name, 
-        summary, 
+        SELECT id,
+        person_name AS name,
+        summary,
         phno,
         email,
         linkedin,
         github,
-        resume_url
+        resume_url,
+        summarised_roles
         FROM personal_details;`;
 
     return data.rows[0];

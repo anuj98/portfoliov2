@@ -2,7 +2,6 @@
 
 .about {
   position: relative;
-  overflow: hidden;
   min-height: calc(100svh - 60px);
   display: flex;
   flex-direction: column;
@@ -16,7 +15,10 @@
 
 .particleBackground {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -24,7 +26,10 @@
 
 .radialGlow {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -145,83 +150,10 @@
 /* Social icons */
 .socials {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-.socialIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--glass-border);
-  background: var(--bg-surface);
-  border-radius: 8px;
-  color: var(--text-muted);
-  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-
-.socialIcon:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  box-shadow: var(--glow-sm);
-}
-
-/* ── Hobbies ── */
-
-.about__hobbies {
-  position: relative;
-  z-index: 1;
-  margin-top: 4rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--glass-border);
-}
-
-.about__hobbiesTitle {
-  font-family: var(--font-mono);
-  color: var(--text-dim);
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
-  text-align: center;
-}
-
-.about__hobbiesList {
-  display: flex;
-  flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: center;
-}
-
-/* Pill tag (Hobby subcomponent renders this class) */
-.about__hobbiesItem {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--skill-border);
-  border-radius: 999px;
-  background: transparent;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
-  cursor: default;
-}
-
-.about__hobbiesItem:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  box-shadow: var(--glow-sm);
-}
-
-.about__hobbiesItem img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
 /* ── Desktop layout ── */
@@ -243,14 +175,6 @@
   }
 
   .socials {
-    justify-content: flex-start;
-  }
-
-  .about__hobbiesTitle {
-    text-align: left;
-  }
-
-  .about__hobbiesList {
     justify-content: flex-start;
   }
 }

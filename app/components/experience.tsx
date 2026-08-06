@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Dialog } from "@/app/components/dialog";
 import Button from "./button";
 import styles from "@/app/components/experience.module.css";
@@ -57,7 +57,6 @@ export default function Experience({ experiences = [] }: ExperienceProps) {
   const [selectedExperience, setSelectedExperience] =
     useState<ExperienceModel | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const tabContainerRef = useRef<HTMLDivElement>(null);
   // Group experiences by company
   const companies = Array.from(new Set(experiences.map((exp) => exp.company)));
   const activeCompany = companies[activeCompanyIndex];
@@ -71,19 +70,16 @@ export default function Experience({ experiences = [] }: ExperienceProps) {
       return sd2.getTime() - sd1.getTime(); // Descending order (newest first)
     });
 
-  const scrollTabs = (direction: "left" | "right") => {
-    if (tabContainerRef.current) {
-      const scrollAmount = 200;
-      const newScrollLeft =
-        direction === "left"
-          ? tabContainerRef.current.scrollLeft - scrollAmount
-          : tabContainerRef.current.scrollLeft + scrollAmount;
+  const goToPreviousCompany = () => {
+    if (companies.length === 0) return;
+    setActiveCompanyIndex(
+      (prev) => (prev - 1 + companies.length) % companies.length
+    );
+  };
 
-      tabContainerRef.current.scrollTo({
-        left: newScrollLeft,
-        behavior: "smooth",
-      });
-    }
+  const goToNextCompany = () => {
+    if (companies.length === 0) return;
+    setActiveCompanyIndex((prev) => (prev + 1) % companies.length);
   };
 
   const getDateRange = (startDate: string, endDate: string) => {
@@ -124,17 +120,18 @@ export default function Experience({ experiences = [] }: ExperienceProps) {
       <div className={styles.experience__wrapper}>
         <div className={styles.experience__tab_navigation}>
           <button
+            type="button"
             className={styles.experience__scroll_button}
-            onClick={() => scrollTabs("left")}
+            onClick={goToPreviousCompany}
+            aria-label="Previous company"
+            disabled={companies.length < 2}
           >
             {"<"}
           </button>
-          <div
-            className={styles.experience__tab_container}
-            ref={tabContainerRef}
-          >
+          <div className={styles.experience__tab_container}>
             {companies.map((company, index) => (
               <button
+                type="button"
                 key={company}
                 onClick={() => setActiveCompanyIndex(index)}
                 className={`${styles.experience__tab_button} ${
@@ -148,8 +145,11 @@ export default function Experience({ experiences = [] }: ExperienceProps) {
             ))}
           </div>
           <button
+            type="button"
             className={styles.experience__scroll_button}
-            onClick={() => scrollTabs("right")}
+            onClick={goToNextCompany}
+            aria-label="Next company"
+            disabled={companies.length < 2}
           >
             {">"}
           </button>
@@ -166,12 +166,18 @@ export default function Experience({ experiences = [] }: ExperienceProps) {
                   <div className={styles.experienceInfo}>
                     <div className={styles.roleHeader}>
                       <div>
-                        <h3 className={styles.jobTitle}>{experience.job_title}</h3>
-                        <p className={styles.companyName}>{experience.company}</p>
+                        <div className={styles.titleRow}>
+                          <h3 className={styles.jobTitle}>
+                            {experience.job_title}
+                          </h3>
+                          {experience.end_date.length === 0 && (
+                            <span className={styles.currentBadge}>Current</span>
+                          )}
+                        </div>
+                        <p className={styles.companyName}>
+                          {experience.company}
+                        </p>
                       </div>
-                      {experience.end_date.length === 0 && (
-                        <span className={styles.currentBadge}>Current</span>
-                      )}
                     </div>
                     <p className={styles.location}>{experience.location}</p>
                     <p className={styles.dateRange}>

@@ -1,18 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "@/app/components/navBar.module.css";
 import ThemeToggle from "@/app/components/themeToggle";
 
 const MENU_LIST = [
-  { text: "About", href: "#about" },
-  { text: "Experience", href: "#experience" },
-  { text: "Projects", href: "#projects" },
+  { text: "About", href: "/#about" },
+  { text: "Experience", href: "/#experience" },
+  { text: "Projects", href: "/#projects" },
   { text: "Blog", href: "/blog" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [navActive, setNavActive] = useState<boolean | null>(null);
   const [activeIdx, setActiveIdx] = useState(-1);
   const [scrolled, setScrolled] = useState(false);
@@ -36,6 +39,7 @@ export default function Navbar() {
           <Link
             href="/"
             onClick={(e) => {
+              if (!isHome) return;
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
@@ -79,11 +83,11 @@ export default function Navbar() {
                   className={`${styles.nav__item}${activeIdx === idx ? ` ${styles.active}` : ""}`}
                   href={menu.href}
                   onClick={
-                    menu.href.startsWith("#")
+                    menu.href.startsWith("/#") && isHome
                       ? (e) => {
                           e.preventDefault();
                           document
-                            .querySelector(menu.href)
+                            .querySelector(menu.href.slice(1))
                             ?.scrollIntoView({ behavior: "smooth" });
                         }
                       : undefined

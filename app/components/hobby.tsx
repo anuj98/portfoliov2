@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "@/app/components/about.module.css";
+import styles from "@/app/components/hobbies.module.css";
 
 export default function Hobby({
   alt,
@@ -11,7 +11,7 @@ export default function Hobby({
   text: string;
 }) {
   return (
-    <div className={styles.about__hobbiesItem}>
+    <div className={styles.hobbies__item}>
       <Image alt={alt} src={src} width={100} height={100} loading="lazy" />
       {text}
     </div>

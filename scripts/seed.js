@@ -15,15 +15,16 @@ async function seedPersonalDetails(client, data) {
     email VARCHAR(255) NOT NULL,
     linkedin VARCHAR(255) NOT NULL,
     github VARCHAR(255) NOT NULL,
-    resume_url VARCHAR(255) NOT NULL
+    resume_url VARCHAR(255) NOT NULL,
+    summarised_roles TEXT[]
     )`;
 
     console.log("Created 'personal_details' table successfully");
 
     // Insert data into the "personal_details" table
     const insertedUsers = await client.sql`
-          INSERT INTO personal_details (person_name, summary, phno, email, linkedin, github, resume_url)
-          VALUES (${data["person_name"]}, ${data["summary"]}, ${data["phno"]}, ${data["email"]}, ${data["linkedin"]}, ${data["github"]}, ${data["resume_url"]})
+          INSERT INTO personal_details (person_name, summary, phno, email, linkedin, github, resume_url, summarised_roles)
+          VALUES (${data["person_name"]}, ${data["summary"]}, ${data["phno"]}, ${data["email"]}, ${data["linkedin"]}, ${data["github"]}, ${data["resume_url"]}, ${data["summarised_roles"]})
           ON CONFLICT (id) DO NOTHING;
         `;
 
