@@ -29,6 +29,7 @@ export interface PersonalDetails {
     linkedin: string;
     github: string;
     resume_url: string;
+    summarised_roles: string[];
 }
 
 export interface Project {

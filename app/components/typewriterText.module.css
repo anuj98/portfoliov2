@@ -1,0 +1,15 @@
+.typewriter {
+  white-space: pre;
+}
+
+.typewriterCursor {
+  color: var(--accent);
+  margin-left: 2px;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriterCursor {
+    animation: none;
+  }
+}

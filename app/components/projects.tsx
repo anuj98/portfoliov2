@@ -52,7 +52,17 @@ export default function ProjectsNew({ projects }: { projects: Project[] }) {
 
   return (
     <section id="projects" className={styles.projects}>
-      <div className={styles.title}>Personal Projects</div>
+      <div className={styles.labelRow}>
+        <span className={styles.labelGlyph}>&gt;</span>
+        <span className={styles.labelText}>Portfolio</span>
+        <div className={styles.labelLine} />
+      </div>
+
+      <h2 className={styles.title}>Personal Projects</h2>
+      <p className={styles.subtitle}>
+        A selection of things I&apos;ve shipped — side projects, experiments,
+        and open-source tools.
+      </p>
 
       <div
         ref={scrollRef}
@@ -63,7 +73,11 @@ export default function ProjectsNew({ projects }: { projects: Project[] }) {
             key={`${project.id}-${index}`}
             style={{ flex: "0 0 auto", margin: "0 5px" }}
           >
-            <ProjectCard project={project} />
+            <ProjectCard
+              project={project}
+              index={index}
+              displayNumber={(index % projects.length) + 1}
+            />
           </div>
         ))}
       </div>

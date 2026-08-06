@@ -35,7 +35,7 @@
   transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s;
   display: flex;
   flex-direction: column;
-  font-family: "Reddit Mono", monospace;
+  font-family: var(--font-mono);
   width: 100%;
   max-width: 100%;
   padding: 0;

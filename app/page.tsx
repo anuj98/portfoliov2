@@ -2,6 +2,7 @@ import styles from "@/app/page.module.css";
 import About from "@/app/components/about";
 import Experience from "@/app/components/experience";
 import Projects from "@/app/components/projects";
+import Hobbies from "@/app/components/hobbies";
 import Contacts from "@/app/components/contacts";
 import ScrollReveal from "@/app/components/scrollReveal";
 import {
@@ -39,13 +40,16 @@ export default async function Home() {
 
       <div className={styles.contentWrapper}>
         <ScrollReveal>
-          <About personalDetails={personalDetails} hobbies={hobbies} />
+          <About personalDetails={personalDetails} roles={personalDetails.summarised_roles} />
         </ScrollReveal>
         <ScrollReveal delay={80}>
           <Skills skills={skills} />
         </ScrollReveal>
         <ScrollReveal delay={80}>
           <Experience experiences={experienceList} />
+        </ScrollReveal>
+        <ScrollReveal delay={80}>
+          <Hobbies hobbies={hobbies} />
         </ScrollReveal>
         <ScrollReveal delay={80}>
           <Projects projects={projects} />

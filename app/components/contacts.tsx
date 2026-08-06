@@ -1,24 +1,7 @@
 import styles from "@/app/components/contacts.module.css";
-import Link from "next/link";
 import Image from "next/image";
-
-const ICONS = [
-  {
-    href: (linkedIn: string) => linkedIn,
-    alt: "linkedin",
-    src: "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/linkedin.svg",
-  },
-  {
-    href: (email: string) => `mailto:${email}`,
-    alt: "email",
-    src: "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/email.svg",
-  },
-  {
-    href: (gitHub: string) => gitHub,
-    alt: "GitHub",
-    src: "https://vmdi8qakqy5un7sl.public.blob.vercel-storage.com/icons/github.svg",
-  },
-];
+import SocialIcon from "./socialIcon";
+import ICONS from "./socialIcons";
 
 export default function Contacts({
   gitHub,
@@ -36,16 +19,14 @@ export default function Contacts({
       {/* Desktop: fixed left sidebar */}
       <div className={styles.contacts}>
         {ICONS.map((icon, i) => (
-          <Link key={icon.alt} href={hrefs[i]} target="_blank">
-            <Image
-              alt={icon.alt}
-              className={styles.icon}
-              src={icon.src}
-              width={40}
-              height={40}
-              loading="lazy"
-            />
-          </Link>
+          <SocialIcon
+            key={icon.alt}
+            href={hrefs[i]}
+            label={icon.alt}
+            icon={<Image src={icon.src} width={18} height={18} alt="" />}
+            external={icon.external}
+            variant="icon"
+          />
         ))}
         <div className={styles.verticalLine} />
       </div>
@@ -53,16 +34,14 @@ export default function Contacts({
       {/* Mobile: horizontal row in page flow */}
       <div className={styles.contactsMobile}>
         {ICONS.map((icon, i) => (
-          <Link key={icon.alt} href={hrefs[i]} target="_blank">
-            <Image
-              alt={icon.alt}
-              className={styles.icon}
-              src={icon.src}
-              width={40}
-              height={40}
-              loading="lazy"
-            />
-          </Link>
+          <SocialIcon
+            key={icon.alt}
+            href={hrefs[i]}
+            label={icon.alt}
+            icon={<Image src={icon.src} width={18} height={18} alt="" />}
+            external={icon.external}
+            variant="icon"
+          />
         ))}
       </div>
     </>

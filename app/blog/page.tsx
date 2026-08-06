@@ -8,6 +8,11 @@ export default async function BlogPage() {
   blogs = blogs.sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
   return (
     <main className={styles.blogMain}>
+      <div className={styles.sectionLabel}>
+        <span className={styles.labelGlyph}>{'>'}</span>
+        <span className={styles.labelText}>BLOG</span>
+        <div className={styles.labelLine} />
+      </div>
       <h1 className={styles.blogTitleHeader}>Blog</h1>
       <p className={styles.blogIntro}>
         Welcome to the blog section! Here you will find articles, tutorials, and updates related to software engineering, web development, and personal projects.

@@ -1,16 +1,53 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import styles from "@/app/components/skills.module.css";
 import { Skill } from "@/app/db/models";
 
+function SkillBar({
+  name,
+  rating,
+  delay,
+}: {
+  name: string;
+  rating: number;
+  delay: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const pct = Math.round((rating / 5) * 100);
+
+  return (
+    <div ref={ref} className={styles.skillBar}>
+      <div className={styles.skillBarHeader}>
+        <span className={styles.skillName}>{name}</span>
+        <span className={styles.skillPercent}>{pct}%</span>
+      </div>
+      <div className={styles.skillTrack}>
+        <motion.div
+          className={styles.skillFill}
+          initial={{ width: 0 }}
+          animate={inView ? { width: `${pct}%` } : { width: 0 }}
+          transition={{ duration: 1, delay, ease: "easeOut" }}
+        >
+          <span className={styles.skillDot} />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 export default function Skills({ skills }: { skills: Skill[] }) {
-  function getCategories(){
+  function getCategories() {
     let categories: string[] = skills.map((skill) => {
       return skill.category;
     });
-    let uniqueCategoies = Array.from(new Set([...categories])) as string[];
-    return uniqueCategoies;
+    let uniqueCategories = Array.from(new Set([...categories])) as string[];
+    return uniqueCategories;
   }
 
-  function getSubCategories(category: string){
+  function getSubCategories(category: string) {
     let subCategories = skills
       .filter((skill) => skill.category === category)
       .map((skill) => skill.subcategory);
@@ -20,34 +57,8 @@ export default function Skills({ skills }: { skills: Skill[] }) {
     return uniqueSubCategories;
   }
 
-  function renderRatingBar(rating: number){
-    let left = (rating / 5) * 100;
-    let right = 100 - left;
-    return (
-      <div
-        style={{
-          background: `linear-gradient(90deg, var(--accent) ${left}%, var(--rating-bar-bg) ${right}%)`,
-          height: "4px",
-          marginTop: "6px",
-          borderRadius: "10px"
-        }}
-      ></div>
-    );
-  }
-
-  function renderSkill(name: string, rating: number){
-    return (
-      <div className={styles.skill_wrapper}>
-        <div className={styles.skill_content}>
-          <div>{name}</div>
-          <>{renderRatingBar(rating)}</>
-        </div>
-      </div>
-    );
-  }
-
-  function renderSubCategory(category: string, subCategory: string){
-    let requiedSkills = skills.filter(
+  function renderSubCategory(category: string, subCategory: string) {
+    let requiredSkills = skills.filter(
       (skill) =>
         skill.category === category && skill.subcategory === subCategory
     );
@@ -55,23 +66,33 @@ export default function Skills({ skills }: { skills: Skill[] }) {
       <>
         <div className={styles.skillSubCategory_title}>{subCategory}</div>
         <div>
-          {requiedSkills.map((skill) => (
-            <div key={skill.id} className={styles.all_skills}>
-              {renderSkill(skill.name, skill.rating)}
-            </div>
+          {requiredSkills.map((skill, index) => (
+            <SkillBar
+              key={skill.id}
+              name={skill.name}
+              rating={skill.rating}
+              delay={0.3 + index * 0.1}
+            />
           ))}
         </div>
       </>
     );
-  };
+  }
 
   return (
     <section id="skills" className={styles.section}>
-      <div className={styles.title}>Skills</div>
-      <div className={styles.description}>
+      <div className={styles.sectionLabel}>
+        <span className={styles.sectionLabelGlyph}>{">"}</span>
+        <span className={styles.sectionLabelText}>Skills &amp; Expertise</span>
+        <span className={styles.sectionLabelLine} />
+      </div>
+
+      <h2 className={styles.heading}>What I work with</h2>
+      <p className={styles.description}>
         {`Throughout my journey, I've been driven by a passion for learning and
         self-improvement. Here are some of the skills I've honed along the way.`}
-      </div>
+      </p>
+
       <div className={styles.wrapper}>
         {getCategories().map((category, index) => {
           return (
@@ -79,6 +100,7 @@ export default function Skills({ skills }: { skills: Skill[] }) {
               key={`skill-category-${index}`}
               className={styles.skillCategory_wrapper}
             >
+              <div className={styles.cardGlow} aria-hidden="true" />
               <div className={styles.skillCategory_title}>{category}</div>
               <>
                 {getSubCategories(category).map((subCategory) => {

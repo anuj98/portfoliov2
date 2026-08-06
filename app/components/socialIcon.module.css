@@ -1,0 +1,75 @@
+/* ── Shared link base ── */
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.link:hover {
+  border-color: var(--accent);
+  box-shadow: var(--glow-sm);
+  background: var(--bg-surface-hover);
+}
+
+/* ── Pill variant (about section socials) ── */
+
+.pill {
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.link:hover .label {
+  color: var(--text);
+}
+
+/* ── Icon variant (contacts sidebar) ── */
+
+.iconBox {
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+/* ── Icon wrapper — centers image inside both variants ── */
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: var(--icon-filter);
+}
+
+/* ── Icon tint via drop-shadow on hover ── */
+
+.iconWrapper img,
+.iconWrapper svg {
+  transition: filter 0.2s;
+}
+
+.link:hover .iconWrapper img,
+.link:hover .iconWrapper svg {
+  filter: var(--icon-filter) drop-shadow(0 0 4px var(--accent));
+}
+
+/* ── Reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .label,
+  .iconWrapper img,
+  .iconWrapper svg {
+    transition: none;
+  }
+}
