@@ -73,7 +73,12 @@ function Header({
   return (
     <>
       {showClose && onClose && (
-        <button className={styles.closeIcon} onClick={onClose}>
+        <button
+          type="button"
+          className={styles.closeIcon}
+          onClick={onClose}
+          aria-label="Close dialog"
+        >
           ×
         </button>
       )}

@@ -94,7 +94,7 @@
   justify-content: center;
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  color: var(--text-dim);
+  color: var(--text-muted);
   border-top: 1px solid var(--glass-border);
 }
 

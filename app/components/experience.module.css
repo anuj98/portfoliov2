@@ -238,7 +238,7 @@
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.05em;
-  color: var(--text-dim);
+  color: var(--text-muted);
   margin-top: 0.2rem;
 }
 
